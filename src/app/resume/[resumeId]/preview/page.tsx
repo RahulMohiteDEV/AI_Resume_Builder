@@ -37,7 +37,7 @@ interface Resume {
 
   workExperience: {
     company: string;
-    position: string;
+    role: string;
     startDate: string;
     endDate: string;
     description: string;
@@ -175,7 +175,7 @@ export default function ResumePreviewPage() {
 
                 {resume.workExperience?.map((exp, index) => (
                   <div key={index} className="mb-6">
-                    <h3 className="font-semibold">{exp.position}</h3>
+                    <h3 className="font-semibold">{exp.role}</h3>
 
                     <p className="text-gray-500 text-sm">{exp.company}</p>
 

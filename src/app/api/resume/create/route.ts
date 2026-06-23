@@ -10,9 +10,15 @@ export async function POST(req: NextRequest) {
 
     const userId = await getCurrentUser();
 
+    const body = await req.json();
+
+    const { title, jobTitle, experienceLevel } = body;
+
     const newResume = await ResumeModel.create({
       user_id: userId,
-      title: "",
+      title,
+      jobTitle,
+      experienceLevel,
       summary: "",
       personalInfo: {},
       workExperience: [],
@@ -22,22 +28,23 @@ export async function POST(req: NextRequest) {
       skills: [],
     });
 
-    return NextResponse.json<ApiResponse>(
+    return NextResponse.json(
       {
         success: true,
         message: "Resume created successfully",
         data: newResume,
       },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error) {
-    console.log("error in create resume", error);
-    return NextResponse.json<ApiResponse>(
+    console.log(error);
+
+    return NextResponse.json(
       {
         success: false,
         message: "Something went wrong",
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

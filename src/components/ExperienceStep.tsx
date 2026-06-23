@@ -69,37 +69,41 @@ export default function ExperienceStep({ resumeId, onNext, onBack }: Props) {
 
       if (data.resume.experience?.length) {
         reset({
-          experience: data.resume.experience,
+            experience: data.data.workExperience,
         });
+        
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const generateDescription = async (index: number) => {
-    try {
-      const exp = watch(`experience.${index}`);
+const generateDescription = async (index: number) => {
+  const exp = watch(`experience.${index}`);
 
-      const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
+  const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
+  const resume = resumeData.data;
 
-      const resume = resumeData.resume;
+  if (!exp?.role || !resume?.experienceLevel) {
+    console.log("Missing required fields");
+    return;
+  }
 
-      const { data } = await axios.post("/api/ai/generate-experience", {
-        jobRole: exp.role,
-        experienceLevel: resume.experienceLevel,
-      });
-
-      setValue(`experience.${index}.description`, data.description);
-    } catch (error) {
-      console.log(error);
+  const { data } = await axios.post(
+    "/api/ai/generate-experience-description",
+    {
+      jobRole: exp.role,
+      experienceLevel: resume.experienceLevel,
     }
-  };
+  );
+
+  setValue(`experience.${index}.description`, data.description);
+};
 
   const onSubmit = async (values: FormValues) => {
     try {
       await axios.patch(`/api/resume/${resumeId}`, {
-        experience: values.experience,
+        workExperience: values.experience,
       });
 
       router.push(`/resume/${resumeId}/preview`);

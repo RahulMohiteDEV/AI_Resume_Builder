@@ -57,7 +57,7 @@ export default function ResumePage() {
         experienceLevel: formData.experienceLevel,
       });
 
-      console.log(response);
+      console.log("RESPONSE =>", response);
 
       const resumeId = response.data._id;
       console.log("reached...");
