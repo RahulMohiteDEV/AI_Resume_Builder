@@ -19,7 +19,7 @@ console.log("Resume ID:", resumeId);
 
  const resume = await ResumeModel.findOne({
       _id: resumeId,
-    //   user_id: user.userId,
+      // user_id: user.userId,
     });
 
     console.log("resume Found", resume);
@@ -78,18 +78,19 @@ export async function PATCH(
     console.log("resume id", resumeId);
 
     const updatedResume = await ResumeModel.findByIdAndUpdate(
-      {
-        _id: resumeId,
-        user_id: user.userId,
-      },
-      {
-        $set: body,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+  {
+    _id: resumeId,
+    user_id: user.userId,
+  },
+  {
+    $set: body,
+  },
+  {
+    new: true,
+    runValidators: true,
+  }
+);
+
 
     if (!updatedResume)
       return NextResponse.json<ApiResponse>(

@@ -67,7 +67,7 @@ export default function ExperienceStep({ resumeId, onNext, onBack }: Props) {
     try {
       const { data } = await axios.get(`/api/resume/${resumeId}`);
 
-      if (data.resume.experience?.length) {
+      if (data.data.workExperience?.length) {
         reset({
             experience: data.data.workExperience,
         });
