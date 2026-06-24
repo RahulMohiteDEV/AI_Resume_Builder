@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Eye, Download, Sparkles } from "lucide-react";
 import { useParams } from "next/navigation";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ResumePDF from "@/components/ResumePDF";
 
 interface Resume {
   title: string;
@@ -51,6 +53,9 @@ export default function ResumePreviewPage() {
 
   const [loading, setLoading] = useState(true);
 
+  const [atsResult, setAtsResult] = useState<any>(null);
+  const [atsLoading, setAtsLoading] = useState(false);
+
   const { resumeId } = useParams();
 
   useEffect(() => {
@@ -70,6 +75,71 @@ export default function ResumePreviewPage() {
       setLoading(false);
     }
   };
+
+  const handleAtsScore = async () => {
+  if (!resume) return;
+
+  try {
+    setAtsLoading(true);
+
+    const resumeText = `
+      Name: ${resume.personalInfo?.fullname}
+
+      Summary:
+      ${resume.summary}
+
+      Skills:
+      ${resume.skills?.join(", ")}
+
+      Work Experience:
+      ${resume.workExperience
+        ?.map(
+          (exp) => `
+            Role: ${exp.role}
+            Company: ${exp.company}
+            Description: ${exp.description}
+          `
+        )
+        .join("\n")}
+
+      Projects:
+      ${resume.projects
+        ?.map(
+          (project) => `
+            Title: ${project.title}
+            Description: ${project.description}
+            Tech Stack: ${project.techStack?.join(", ")}
+          `
+        )
+        .join("\n")}
+
+      Education:
+      ${resume.education
+        ?.map(
+          (edu) => `
+            Degree: ${edu.degree}
+            Institute: ${edu.institute}
+          `
+        )
+        .join("\n")}
+    `;
+
+    const { data } = await axios.post(
+      "/api/ai/ats-score",
+      {
+        resumeText,
+      }
+    );
+
+    console.log("ATS RESULT", data);
+
+    setAtsResult(data.data.AtsScore);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setAtsLoading(false);
+  }
+};
 
   if (loading) {
     return (
@@ -92,15 +162,28 @@ export default function ResumePreviewPage() {
               <h2 className="font-bold text-xl mb-6">Resume Actions</h2>
 
               <div className="space-y-3">
-                <button className="w-full flex items-center gap-3 bg-violet-600 text-white px-4 py-3 rounded-xl">
+                <button
+  onClick={handleAtsScore}
+  disabled={atsLoading}
+  className="w-full flex items-center gap-3 bg-violet-600 text-white px-4 py-3 rounded-xl"
+>
                   <Sparkles size={18} />
-                  ATS Score
+                  {atsLoading ? "Checking..." : "ATS Score"}
                 </button>
 
-                <button className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl">
-                  <Download size={18} />
-                  Download PDF
-                </button>
+               <PDFDownloadLink
+  document={<ResumePDF resume={resume} />}
+  fileName={`${resume.personalInfo?.fullname}-Resume.pdf`}
+>
+  {({ loading }) => (
+    <button className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl">
+      <Download size={18} />
+      {loading
+        ? "Generating..."
+        : "Download PDF"}
+    </button>
+  )}
+</PDFDownloadLink>
 
                 <button className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl">
                   <Eye size={18} />
@@ -150,6 +233,66 @@ export default function ResumePreviewPage() {
                   <p className="text-gray-700 leading-7">{resume.summary}</p>
                 </section>
               )}
+
+
+{atsResult && (
+  <section className="mt-8 border rounded-xl p-5 bg-slate-50">
+    <h2 className="font-bold text-2xl mb-4">
+      ATS Score Report
+    </h2>
+
+    <div className="text-5xl font-bold text-green-600">
+      {atsResult.atsScore}/100
+    </div>
+
+    <p className="mt-4 text-gray-700">
+      {atsResult.summary}
+    </p>
+
+    <div className="mt-6">
+      <h3 className="font-semibold text-lg">
+        Strengths
+      </h3>
+
+      <ul className="list-disc pl-5 mt-2">
+        {atsResult.strengths?.map(
+          (item: string, index: number) => (
+            <li key={index}>{item}</li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="mt-6">
+      <h3 className="font-semibold text-lg">
+        Improvements
+      </h3>
+
+      <ul className="list-disc pl-5 mt-2">
+        {atsResult.improvements?.map(
+          (item: string, index: number) => (
+            <li key={index}>{item}</li>
+          )
+        )}
+      </ul>
+    </div>
+
+    <div className="mt-6">
+      <h3 className="font-semibold text-lg">
+        Recommendations
+      </h3>
+
+      <ul className="list-disc pl-5 mt-2">
+        {atsResult.recommendations?.map(
+          (item: string, index: number) => (
+            <li key={index}>{item}</li>
+          )
+        )}
+      </ul>
+    </div>
+  </section>
+)}
+
 
               {/* Skills */}
 
