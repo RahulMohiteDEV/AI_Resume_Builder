@@ -94,10 +94,16 @@ const generateDescription = async (index: number) => {
     {
       jobRole: exp.role,
       experienceLevel: resume.experienceLevel,
+      yearsOfExperience: resume.yearsOfExperience,
+    techStack: resume.skills?.join(", "),
     }
   );
 
-  setValue(`experience.${index}.description`, data.description);
+setValue(
+  `experience.${index}.description`,
+  data.data.workExperienceDescription
+);
+
 };
 
   const onSubmit = async (values: FormValues) => {
