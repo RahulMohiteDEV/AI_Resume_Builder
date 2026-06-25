@@ -28,7 +28,7 @@ export default function SkillsStep({ resumeId, onNext, onBack }: Props) {
     try {
       const { data } = await axios.get(`/api/resume/${resumeId}/`);
 
-      setSkills(data.resume.skills || []);
+      setSkills(data.data.skills || []);
     } catch (error) {
       console.log(error);
     }

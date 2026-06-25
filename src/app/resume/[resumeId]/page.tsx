@@ -7,6 +7,7 @@ import EducationStep from "@/components/EducationStep";
 import SkillsStep from "@/components/SkillsStep";
 import ProjectsStep from "@/components/ProjectStep";
 import ExperienceStep from "@/components/ExperienceStep";
+import { useSearchParams } from "next/navigation";
 
 export default function ResumeBuilderPage() {
   const params = useParams();
@@ -16,8 +17,23 @@ export default function ResumeBuilderPage() {
 
   const [step, setStep] = useState(1);
 
+  const searchParams = useSearchParams();
+
+const isEditMode =
+  searchParams.get("edit") === "true";
+
   return (
     <>
+<div className="bg-white border-b p-5">
+  <div className="max-w-6xl mx-auto">
+    <h1 className="text-3xl font-bold">
+      {isEditMode
+        ? "Edit Resume"
+        : "Build Resume"}
+    </h1>
+  </div>
+</div>
+
       {step === 1 && (
         <PersonalInfoStep resumeId={resumeId} onNext={() => setStep(2)} />
       )}

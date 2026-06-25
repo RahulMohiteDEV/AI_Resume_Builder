@@ -6,6 +6,7 @@ import { Eye, Download, Sparkles } from "lucide-react";
 import { useParams } from "next/navigation";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import ResumePDF from "@/components/ResumePDF";
+import { useRouter } from "next/navigation";
 
 interface Resume {
   title: string;
@@ -16,6 +17,7 @@ interface Resume {
     email: string;
     mobile: string;
     location: string;
+    linkedIn: string;
     github: string;
     portfolio: string;
   };
@@ -57,6 +59,8 @@ export default function ResumePreviewPage() {
   const [atsLoading, setAtsLoading] = useState(false);
 
   const { resumeId } = useParams();
+
+  const router = useRouter();
 
   useEffect(() => {
     fetchResume();
@@ -185,10 +189,14 @@ export default function ResumePreviewPage() {
   )}
 </PDFDownloadLink>
 
-                <button className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl">
-                  <Eye size={18} />
-                  Edit Resume
-                </button>
+            <button
+  onClick={() => router.push(`/resume/${resumeId}`)}
+  className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl"
+>
+  <Eye size={18} />
+  Edit Resume
+</button>
+
               </div>
             </div>
           </div>
@@ -216,9 +224,10 @@ export default function ResumePreviewPage() {
                 </div>
 
                 <div className="mt-2 flex gap-4 text-sm">
+                   <span>{resume.personalInfo?.portfolio}</span>
                   <span>{resume.personalInfo?.github}</span>
 
-                  <span>{resume.personalInfo?.portfolio}</span>
+                  <span>{resume.personalInfo?.linkedIn}</span>
                 </div>
               </div>
 

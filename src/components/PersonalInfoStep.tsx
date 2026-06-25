@@ -11,11 +11,11 @@ interface Props {
 }
 
 interface PersonalInfoForm {
-  fullName: string;
+  fullname: string;
   email: string;
-  phone: string;
+  mobile: string;
   location: string;
-  linkedin: string;
+  linkedIn: string;
   github: string;
   portfolio: string;
 }
@@ -36,7 +36,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
     try {
       const { data } = await axios.get(`/api/resume/${resumeId}`);
 
-      reset(data.resume.personalInfo || {});
+      reset(data.data.personalInfo || {});
     } catch (error) {
       console.log(error);
     }
@@ -88,7 +88,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
               icon={<User size={18} />}
               placeholder="John Doe"
               label="Full Name"
-              register={register("fullName")}
+              register={register("fullname")}
             />
 
             {/* Email */}
@@ -103,8 +103,8 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
             <InputField
               icon={<Phone size={18} />}
               placeholder="+91 9876543210"
-              label="Phone Number"
-              register={register("phone")}
+              label="Mobile Number"
+              register={register("mobile")}
             />
 
             {/* Location */}
@@ -120,7 +120,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
               //   icon={<Linkedin size={18} />}
               placeholder="https://linkedin.com/in/..."
               label="LinkedIn"
-              register={register("linkedin")}
+              register={register("linkedIn")}
             />
 
             {/* Github */}
