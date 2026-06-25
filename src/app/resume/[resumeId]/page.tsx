@@ -7,6 +7,10 @@ import EducationStep from "@/components/EducationStep";
 import SkillsStep from "@/components/SkillsStep";
 import ProjectsStep from "@/components/ProjectStep";
 import ExperienceStep from "@/components/ExperienceStep";
+import AchievementStep from "@/components/AchievementStep";
+import CertificationStep from "@/components/CertificationStep";
+import SummaryStep from "@/components/SummaryStep";
+
 import { useSearchParams } from "next/navigation";
 
 export default function ResumeBuilderPage() {
@@ -39,15 +43,15 @@ const isEditMode =
       )}
 
       {step === 2 && (
-        <EducationStep
-          resumeId={resumeId}
-          onBack={() => setStep(1)}
-          onNext={() => setStep(3)}
-        />
-      )}
+  <SummaryStep
+    resumeId={resumeId}
+    onBack={() => setStep(1)}
+    onNext={() => setStep(3)}
+  />
+)}
 
       {step === 3 && (
-        <SkillsStep
+        <EducationStep
           resumeId={resumeId}
           onBack={() => setStep(2)}
           onNext={() => setStep(4)}
@@ -55,7 +59,7 @@ const isEditMode =
       )}
 
       {step === 4 && (
-        <ProjectsStep
+        <SkillsStep
           resumeId={resumeId}
           onBack={() => setStep(3)}
           onNext={() => setStep(5)}
@@ -63,21 +67,35 @@ const isEditMode =
       )}
 
       {step === 5 && (
-        <ExperienceStep
+        <ProjectsStep
           resumeId={resumeId}
           onBack={() => setStep(4)}
           onNext={() => setStep(6)}
         />
       )}
 
-      {/* Step 6 */}
-      {/* Achievements */}
+      {step === 6 && (
+        <ExperienceStep
+          resumeId={resumeId}
+          onBack={() => setStep(5)}
+          onNext={() => setStep(7)}
+        />
+      )}
+{step === 7 && (
+  <AchievementStep
+    resumeId={resumeId}
+    onBack={() => setStep(6)}
+    onNext={() => setStep(8)}
+  />
+)}
 
-      {/* Step 7 */}
-      {/* Summary */}
-
-      {/* Step 8 */}
-      {/* Preview */}
+{step === 8 && (
+  <CertificationStep
+    resumeId={resumeId}
+    onBack={() => setStep(7)}
+    onNext={() => setStep(9)}
+  />
+)}
     </>
   );
 }

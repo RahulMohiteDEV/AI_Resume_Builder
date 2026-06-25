@@ -12,7 +12,7 @@ interface Resume {
   title: string;
   summary: string;
 
-  personalInfo: {
+    personalInfo: {
     fullname: string;
     email: string;
     mobile: string;
@@ -30,7 +30,8 @@ interface Resume {
   }[];
 
   skills: string[];
-
+  achievements: string[];
+  
   projects: {
     title: string;
     description: string;
@@ -341,6 +342,24 @@ export default function ResumePreviewPage() {
                   </div>
                 ))}
               </section>
+
+              {resume.achievements?.length > 0 && (
+  <section className="mt-8">
+    <h2 className="font-bold text-xl mb-4">
+      Achievements
+    </h2>
+
+    <ul className="list-disc pl-5">
+      {resume.achievements.map(
+        (item, index) => (
+          <li key={index}>
+            {item}
+          </li>
+        )
+      )}
+    </ul>
+  </section>
+)}
 
               {/* Projects */}
 

@@ -81,6 +81,10 @@ const resumeSchema = new mongoose.Schema<IResume>(
       type: [String],
       default: [],
     },
+    achievements: {
+  type: [String],
+  default: [],
+},
   },
   {
     timestamps: true,

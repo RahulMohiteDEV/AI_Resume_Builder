@@ -112,9 +112,11 @@ setValue(
         workExperience: values.experience,
       });
 
-     router.push(
-  `/resume/${resumeId}/preview?updated=true`
-);
+onNext();
+
+//      router.push(
+//   `/resume/${resumeId}/preview?updated=true`
+// );
     } catch (error) {
       console.log(error);
     }

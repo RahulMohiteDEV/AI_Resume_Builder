@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
       education: [],
       certifications: [],
       skills: [],
+      achievements: [],
     });
 
     return NextResponse.json(
