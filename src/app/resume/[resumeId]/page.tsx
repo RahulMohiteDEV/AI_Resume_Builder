@@ -28,15 +28,8 @@ const isEditMode =
 
   return (
     <>
-<div className="bg-white border-b p-5">
-  <div className="max-w-6xl mx-auto">
-    <h1 className="text-3xl font-bold">
-      {isEditMode
-        ? "Edit Resume"
-        : "Build Resume"}
-    </h1>
-  </div>
-</div>
+
+
 
       {step === 1 && (
         <PersonalInfoStep resumeId={resumeId} onNext={() => setStep(2)} />

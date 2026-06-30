@@ -9,14 +9,15 @@ import {
   Plus,
   Trash2,
   Sparkles,
-  Bell,
   Briefcase,
   Building,
   Calendar,
   Badge,
   List,
   ChevronDown,
+  RefreshCw,
 } from "lucide-react";
+import Navbar from "./Navbar";
 
 interface Props {
   resumeId: string;
@@ -125,340 +126,284 @@ export default function ExperienceStep({ resumeId, onNext, onBack }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[#fef7ff] text-[#1d1a24]">
-      {/* Top Navigation Bar */}
-      <header className="w-full top-0 sticky z-50 bg-white/80 backdrop-blur-md shadow-sm">
-        <div className="flex justify-between items-center h-16 px-6 max-w-[1280px] mx-auto">
-          <div className="flex items-center gap-2">
-            <Sparkles
-              size={28}
-              className="text-[#630ed4]"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            />
-            <span className="text-xl font-bold text-[#630ed4]">Aura AI</span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a
-              className="text-[#4a4455] text-sm hover:text-[#630ed4] transition-colors"
-              href="#"
-            >
-              Dashboard
-            </a>
-            <a
-              className="text-[#630ed4] font-bold border-b-2 border-[#630ed4] pb-1 text-sm"
-              href="#"
-            >
-              Resumes
-            </a>
-            <a
-              className="text-[#4a4455] text-sm hover:text-[#630ed4] transition-colors"
-              href="#"
-            >
-              Templates
-            </a>
-            <a
-              className="text-[#4a4455] text-sm hover:text-[#630ed4] transition-colors"
-              href="#"
-            >
-              Analytics
-            </a>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button className="text-[#4a4455] hover:text-[#630ed4] transition-colors cursor-pointer">
-              <Bell size={22} />
-            </button>
-            <div className="h-8 w-8 rounded-full bg-[#7c3aed]/20 overflow-hidden border border-[#630ed4]/10">
-              <img
-                className="w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp--2nCZVE3mMVFFVwFTleF90o0toi3_Cb_CGARLEtK8c8OG33RjPjQ8DExD7xUE8CF5fTIxRd-ewHzHMvem5yZxaGpLUagSGiO4P2HII1R-iWPUwtmHNEkJ16F5OvaaJzZtsO83dLK630bPmKuNGOnOnAuRHeAV9xHlGXmkXAORFQE__uDK2e0KJ7XywTBb5ZYMmdYOzKH1QJ4lbhvByAPZe5XlecfxscMyqwoQtjZsz1NgUoULmkt89AsLhDwQyFw89GzTpH-Xg"
-                alt="Profile"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+    <>
+      <Navbar />
 
-      <main className="max-w-4xl mx-auto px-4 md:px-0 py-8">
-        {/* Progress Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <div>
-              <p className="text-[#630ed4] text-xs uppercase tracking-widest mb-1">
-                Step 6 of 8
-              </p>
-              <h1 className="text-3xl text-[#1d1a24]">Work Experience</h1>
+      <div className="min-h-screen bg-slate-50 pt-10">
+        <main className="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 py-10">
+          {/* Progress Header */}
+          <div className="mb-8">
+            <div className="flex justify-between items-end mb-4">
+              <div>
+                <p className="text-[#630ed4] text-xs uppercase tracking-widest mb-1">
+                  Step 6 of 8
+                </p>
+                <h1 className="text-3xl text-[#1d1a24]">Work Experience</h1>
+              </div>
+              <div className="text-right">
+                <span className="text-sm text-[#4a4455]">72% Complete</span>
+              </div>
             </div>
-            <div className="text-right">
-              <span className="text-sm text-[#4a4455]">72% Complete</span>
-            </div>
-          </div>
-          <div className="h-1.5 w-full bg-[#e8dfee] rounded-full overflow-hidden">
-            <div className="bg-gradient-to-r from-[#630ed4] to-[#7c3aed] h-full w-[72%] rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]"></div>
-          </div>
-        </div>
-
-        {/* Main Experience Card */}
-        <div className="bg-white rounded-[2.5rem] shadow-2xl border border-[#ccc3d8]/30 p-8 md:p-12">
-          {/* Context & Actions */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
-            <div className="max-w-md">
-              <h2 className="text-xl text-[#1d1a24] mb-2 font-semibold">
-                Professional Journey
-              </h2>
-              <p className="text-sm text-[#505f76]">
-                Detail your career history to help Aura AI tailor your profile
-                for your next dream role.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() =>
-                  append({
-                    company: "",
-                    role: "",
-                    employmentType: "",
-                    startDate: "",
-                    endDate: "",
-                    currentlyWorking: false,
-                    description: "",
-                  })
-                }
-                className="flex items-center gap-2 bg-[#630ed4] text-white px-6 py-3 rounded-full text-sm hover:shadow-lg hover:shadow-[#630ed4]/20 active:scale-95 transition-all"
-              >
-                <Plus size={20} />
-                Add Experience
-              </button>
-              <button
-                type="button"
-                className="flex items-center gap-2 bg-[#d2bbff]/20 text-[#630ed4] px-6 py-3 rounded-full text-sm hover:bg-[#d2bbff]/30 transition-all"
-              >
-                <Sparkles
-                  size={20}
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                />
-                AI Optimizer
-              </button>
+            <div className="h-1.5 w-full bg-[#e8dfee] rounded-full overflow-hidden">
+              <div className="bg-gradient-to-r from-[#630ed4] to-[#7c3aed] h-full w-[72%] rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]"></div>
             </div>
           </div>
 
-          {/* Experience Form Entries */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            {fields.map((field, index) => (
-              <div
-                key={field.id}
-                className="bg-[#f9f1ff] rounded-[2.5rem] p-6 md:p-10 border border-[#ccc3d8]/20 relative group"
-              >
-                {/* Delete Button */}
-                {fields.length > 1 && (
+          {/* Main Card */}
+          <div className="max-w-4xl mx-auto bg-white rounded-[32px] border border-slate-200 shadow-xl overflow-hidden">
+            <div className="p-8 md:p-12">
+              {/* Heading */}
+              <div className="text-center mb-12">
+                <h1 className="text-4xl font-bold text-slate-900">
+                  Work Experience
+                </h1>
+                <p className="mt-3 text-slate-500 max-w-xl mx-auto">
+                  Detail your career history to help recruiters understand your
+                  professional journey and achievements.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                {/* Experience Entries */}
+                <div className="space-y-6">
+                  {fields.map((field, index) => (
+                    <div
+                      key={field.id}
+                      className="group relative bg-white border border-slate-200 rounded-3xl p-6 md:p-8 transition-all hover:border-[#7c3aed]/30 hover:shadow-md"
+                    >
+                      {/* Experience Icon */}
+                      <div className="absolute -top-4 -left-4 w-10 h-10 bg-white rounded-2xl shadow-sm border border-slate-200 flex items-center justify-center text-[#630ed4] group-hover:scale-110 transition-transform">
+                        <Briefcase size={20} />
+                      </div>
+
+                      {/* Delete Button */}
+                      {fields.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => remove(index)}
+                          className="absolute top-4 right-4 text-slate-400 hover:text-[#ba1a1a] transition-colors p-2 hover:bg-[#ba1a1a]/10 rounded-xl"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      )}
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 mt-2">
+                        {/* Job Title */}
+                        <div className="space-y-2">
+                          <label className="text-sm text-slate-900 font-semibold block ml-1">
+                            Job Title
+                          </label>
+                          <div className="group-input flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                            <Briefcase
+                              size={20}
+                              className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                            />
+                            <input
+                              {...register(`experience.${index}.role`)}
+                              className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                              placeholder="Senior Product Designer"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Company */}
+                        <div className="space-y-2">
+                          <label className="text-sm text-slate-900 font-semibold block ml-1">
+                            Company Name
+                          </label>
+                          <div className="group-input flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                            <Building
+                              size={20}
+                              className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                            />
+                            <input
+                              {...register(`experience.${index}.company`)}
+                              className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                              placeholder="TechFlow Global"
+                              type="text"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Start Date */}
+                        <div className="space-y-2">
+                          <label className="text-sm text-slate-900 font-semibold block ml-1">
+                            Start Date
+                          </label>
+                          <div className="group-input flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                            <Calendar
+                              size={20}
+                              className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                            />
+                            <input
+                              {...register(`experience.${index}.startDate`)}
+                              className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                              type="month"
+                            />
+                          </div>
+                        </div>
+
+                        {/* End Date */}
+                        <div className="space-y-2">
+                          <label className="text-sm text-slate-900 font-semibold block ml-1">
+                            End Date
+                          </label>
+                          <div className="group-input flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                            <Calendar
+                              size={20}
+                              className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                            />
+                            <input
+                              {...register(`experience.${index}.endDate`)}
+                              disabled={watch(`experience.${index}.currentlyWorking`)}
+                              className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                              type="month"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Employment Type */}
+                        <div className="space-y-2">
+                          <label className="text-sm text-slate-900 font-semibold block ml-1">
+                            Employment Type
+                          </label>
+                          <div className="relative">
+                            <div className="flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                              <Badge
+                                size={20}
+                                className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                              />
+                              <select
+                                {...register(`experience.${index}.employmentType`)}
+                                className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none appearance-none cursor-pointer"
+                              >
+                                <option value="">Select Type</option>
+                                <option value="Full Time">Full Time</option>
+                                <option value="Internship">Internship</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Freelance">Freelance</option>
+                              </select>
+                              <ChevronDown
+                                size={20}
+                                className="text-slate-400 flex-shrink-0"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Currently Working Checkbox */}
+                        <div className="space-y-2 flex items-end">
+                          <label className="flex items-center gap-3 text-sm text-slate-900 font-semibold ml-1">
+                            <input
+                              type="checkbox"
+                              {...register(`experience.${index}.currentlyWorking`)}
+                              className="w-4 h-4 accent-[#630ed4] rounded"
+                            />
+                            Currently Working Here
+                          </label>
+                        </div>
+
+                        {/* Description */}
+                        <div className="md:col-span-2 space-y-2">
+                          <div className="flex justify-between items-center">
+                            <label className="text-sm text-slate-900 font-semibold block ml-1">
+                              Job Description &amp; Achievements
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => generateDescription(index)}
+                              className="flex items-center gap-1.5 text-xs font-bold text-[#630ed4] hover:text-[#7c3aed] transition-colors px-3 py-1.5 rounded-full bg-[#7c3aed]/5 border border-[#630ed4]/10"
+                            >
+                              <Sparkles
+                                size={16}
+                                style={{ fontVariationSettings: "'FILL' 1" }}
+                              />
+                              Generate with AI
+                            </button>
+                          </div>
+                          <div className="relative">
+                            <textarea
+                              {...register(`experience.${index}.description`)}
+                              className="w-full min-h-[120px] p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-[#630ed4] focus:bg-white focus:border-[#630ed4] outline-none transition-all resize-none text-sm placeholder:text-slate-400"
+                              placeholder="Led the redesign of the core dashboard, resulting in a 25% increase in user retention..."
+                              rows={4}
+                            />
+                          </div>
+                          <p className="text-[#7b7487] text-[11px] ml-1">
+                            Pro Tip: Focus on quantifiable impact and specific tools used.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Add Experience (Dashed) */}
                   <button
                     type="button"
-                    onClick={() => remove(index)}
-                    className="absolute top-6 right-6 h-10 w-10 flex items-center justify-center rounded-full bg-white text-[#ba1a1a] hover:bg-[#ffdad6]/20 transition-all opacity-0 group-hover:opacity-100"
+                    onClick={() =>
+                      append({
+                        company: "",
+                        role: "",
+                        employmentType: "",
+                        startDate: "",
+                        endDate: "",
+                        currentlyWorking: false,
+                        description: "",
+                      })
+                    }
+                    className="w-full py-10 border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center gap-3 text-slate-400 hover:text-[#630ed4] hover:border-[#7c3aed]/40 hover:bg-[#7c3aed]/5 transition-all group"
                   >
-                    <Trash2 size={18} />
+                    <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-[#7c3aed]/10 transition-all">
+                      <Plus size={28} />
+                    </div>
+                    <span className="font-bold text-sm">Add another role</span>
                   </button>
-                )}
+                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Job Title */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-[#4a4455] flex items-center gap-2 ml-2">
-                      <Briefcase size={18} />
-                      Job Title
-                    </label>
-                    <input
-                      {...register(`experience.${index}.role`)}
-                      className="w-full h-14 bg-white border border-[#ccc3d8] rounded-2xl px-6 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all placeholder:text-[#7b7487]"
-                      placeholder="e.g. Senior Product Designer"
-                      type="text"
-                    />
-                  </div>
-
-                  {/* Company */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-[#4a4455] flex items-center gap-2 ml-2">
-                      <Building size={18} />
-                      Company Name
-                    </label>
-                    <input
-                      {...register(`experience.${index}.company`)}
-                      className="w-full h-14 bg-white border border-[#ccc3d8] rounded-2xl px-6 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all placeholder:text-[#7b7487]"
-                      placeholder="e.g. TechFlow Global"
-                      type="text"
-                    />
-                  </div>
-
-                  {/* Dates Row */}
-                  <div className="grid grid-cols-2 gap-4 col-span-full">
-                    <div className="space-y-2">
-                      <label className="text-sm text-[#4a4455] flex items-center gap-2 ml-2">
-                        <Calendar size={18} />
-                        Start Date
-                      </label>
-                      <input
-                        {...register(`experience.${index}.startDate`)}
-                        className="w-full h-14 bg-white border border-[#ccc3d8] rounded-2xl px-4 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all"
-                        type="month"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm text-[#4a4455] flex items-center gap-2 ml-2">
-                        <Calendar size={18} />
-                        End Date
-                      </label>
-                      <input
-                        {...register(`experience.${index}.endDate`)}
-                        disabled={watch(`experience.${index}.currentlyWorking`)}
-                        className="w-full h-14 bg-white border border-[#ccc3d8] rounded-2xl px-4 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        type="month"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Employment Type */}
-                  <div className="space-y-2 col-span-full">
-                    <label className="text-sm text-[#4a4455] flex items-center gap-2 ml-2">
-                      <Badge size={18} />
-                      Employment Type
-                    </label>
-                    <div className="relative">
-                      <select
-                        {...register(`experience.${index}.employmentType`)}
-                        className="w-full h-14 bg-white border border-[#ccc3d8] rounded-2xl px-6 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all appearance-none cursor-pointer"
-                      >
-                        <option value="">Select Type</option>
-                        <option value="Full Time">Full Time</option>
-                        <option value="Internship">Internship</option>
-                        <option value="Contract">Contract</option>
-                        <option value="Freelance">Freelance</option>
-                      </select>
-                      <ChevronDown
-                        size={20}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-[#7b7487]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Currently Working Checkbox */}
-                  <div className="space-y-2 col-span-full">
-                    <label className="flex items-center gap-3 ml-2 text-sm text-[#4a4455]">
-                      <input
-                        type="checkbox"
-                        {...register(`experience.${index}.currentlyWorking`)}
-                        className="w-4 h-4 accent-[#630ed4]"
-                      />
-                      Currently Working Here
-                    </label>
-                  </div>
-
-                  {/* Description (Full Width) */}
-                  <div className="md:col-span-2 space-y-2">
-                    <div className="flex justify-between items-center ml-2">
-                      <label className="text-sm text-[#4a4455] flex items-center gap-2">
-                        <List size={18} />
-                        Job Description &amp; Achievements
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => generateDescription(index)}
-                        className="text-[#630ed4] text-xs flex items-center gap-1 hover:underline"
-                      >
-                        <Sparkles
-                          size={14}
-                          style={{ fontVariationSettings: "'FILL' 1" }}
+                {/* Footer Actions */}
+                <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={onBack}
+                    className="flex items-center gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors py-2 px-4"
+                  >
+                    <ArrowLeft size={18} />
+                    Back
+                  </button>
+                  <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                    <button className="hidden sm:block text-sm text-slate-400 hover:text-slate-900 transition-colors py-2 px-4">
+                      Save as Draft
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#630ed4] hover:bg-[#7c3aed] text-white px-10 py-4 rounded-xl text-sm shadow-lg shadow-[#630ed4]/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed group"
+                    >
+                      <span>{isSubmitting ? "Saving..." : "Continue"}</span>
+                      {isSubmitting ? (
+                        <RefreshCw size={18} className="animate-spin" />
+                      ) : (
+                        <ArrowRight
+                          size={18}
+                          className="group-hover:translate-x-1 transition-transform"
                         />
-                        Generate with AI
-                      </button>
-                    </div>
-                    <textarea
-                      {...register(`experience.${index}.description`)}
-                      className="w-full bg-white border border-[#ccc3d8] rounded-[2rem] p-6 text-sm focus:ring-2 focus:ring-[#7c3aed]/20 focus:border-[#630ed4] outline-none transition-all placeholder:text-[#7b7487] resize-none"
-                      placeholder="Led the redesign of the core dashboard, resulting in a 25% increase in user retention..."
-                      rows={5}
-                    ></textarea>
-                    <p className="text-[#7b7487] text-[12px] ml-4">
-                      Pro Tip: Focus on quantifiable impact and specific tools
-                      used.
-                    </p>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
-            ))}
-
-            {/* Ghost Item for UX */}
-            <button
-              type="button"
-              onClick={() =>
-                append({
-                  company: "",
-                  role: "",
-                  employmentType: "",
-                  startDate: "",
-                  endDate: "",
-                  currentlyWorking: false,
-                  description: "",
-                })
-              }
-              className="border-2 border-dashed border-[#ccc3d8]/40 rounded-[2.5rem] p-8 flex flex-col items-center justify-center text-center group cursor-pointer hover:border-[#7c3aed]/40 hover:bg-[#7c3aed]/5 transition-all w-full"
-            >
-              <div className="h-12 w-12 rounded-full bg-[#e8dfee] flex items-center justify-center mb-3 group-hover:bg-[#7c3aed] group-hover:text-white transition-all">
-                <Plus size={24} />
-              </div>
-              <p className="text-sm text-[#4a4455] group-hover:text-[#630ed4] transition-colors">
-                Add another role
-              </p>
-            </button>
-
-            {/* Step Navigation Footer */}
-            <div className="mt-12 pt-8 border-t border-[#ccc3d8]/30 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <button
-                type="button"
-                onClick={onBack}
-                className="px-10 py-4 border-2 border-[#ccc3d8] text-[#4a4455] rounded-[2rem] text-sm hover:bg-[#ede5f4] transition-all flex items-center gap-2 w-full sm:w-auto justify-center"
-              >
-                <ArrowLeft size={20} />
-                Back
-              </button>
-              <div className="flex gap-4 w-full sm:w-auto">
-                <button
-                  type="button"
-                  className="px-8 py-4 text-[#4a4455] text-sm hover:text-[#630ed4] transition-colors"
-                >
-                  Save as Draft
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="px-12 py-4 bg-[#630ed4] text-white rounded-[2rem] text-sm shadow-xl shadow-[#630ed4]/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2 w-full sm:w-auto justify-center disabled:opacity-70"
-                >
-                  {isSubmitting ? "Saving..." : "Continue"}
-                  <ArrowRight size={20} />
-                </button>
-              </div>
+              </form>
             </div>
-          </form>
-        </div>
-
-        {/* Branding Footer */}
-        <footer className="mt-8 text-center">
-          <p className="text-[#7b7487] text-xs tracking-wide">
-            PREMIUM RESUME BUILDER BY{" "}
-            <span className="text-[#630ed4] font-bold">AURA AI</span>
-          </p>
-          <div className="mt-4 flex justify-center gap-6 text-[#7b7487] text-[13px]">
-            <a className="hover:text-[#630ed4] transition-colors" href="#">
-              Privacy Policy
-            </a>
-            <a className="hover:text-[#630ed4] transition-colors" href="#">
-              Terms of Service
-            </a>
-            <a className="hover:text-[#630ed4] transition-colors" href="#">
-              Support Center
-            </a>
           </div>
-        </footer>
-      </main>
-    </div>
+
+          {/* Footer */}
+          <div className="text-center mt-12">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Premium Resume Builder by Aura AI
+            </p>
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

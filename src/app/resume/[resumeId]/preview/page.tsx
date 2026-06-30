@@ -29,6 +29,8 @@ import { useParams } from "next/navigation";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import ResumePDF from "@/components/ResumePDF";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
+
 
 interface Resume {
   title: string;
@@ -168,72 +170,10 @@ export default function ResumePreviewPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-[#1d1a24]">
-      {/* Top Navigation Bar with Glass Effect */}
-      <header
-        className={`w-full top-0 sticky z-50 bg-white/80 backdrop-blur-md border-b border-[#ccc3d8] transition-all duration-300 ${
-          isScrolled ? "shadow-md" : ""
-        }`}
-      >
-        <div className="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto">
-          <div className="flex items-center gap-4">
-            <span className="font-bold text-xl text-[#630ed4]">
-              Aura Professional
-            </span>
-          </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a
-              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
-              href="#"
-            >
-              Dashboard
-            </a>
-            <a
-              className="text-[#630ed4] font-bold border-b-2 border-[#630ed4] pb-1 text-sm"
-              href="#"
-            >
-              Resumes
-            </a>
-            <a
-              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
-              href="#"
-            >
-              Templates
-            </a>
-            <a
-              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
-              href="#"
-            >
-              Analytics
-            </a>
-          </nav>
-          <div className="flex items-center gap-4">
-            <button className="text-[#4a4455] hover:text-[#630ed4] transition-colors">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-            </button>
-            <div className="w-8 h-8 rounded-full bg-[#7c3aed]/20 flex items-center justify-center overflow-hidden border border-[#ccc3d8]">
-              <img
-                className="w-full h-full object-cover"
-                alt="Profile"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6P0ItjktizEqmHYEUz3s-2L8JEVl_56sqWuiIY6DVhgwDC0J2IPLjLJuwlSTqCCjte4OFijGRF82s_lC_fNSwxHuBPQ8bs6zy7QwZnKBhkA4RzM1_v-scWL-ESjgYN7_lm-wHAf_y0rifh-JVByquwoJogmZO7-GPCitg0mR5eZOw67xxIqc1ZGqTMYOek7XdJ9M5aCYdq2xmRXbHUb5-sR9sXRQVAlMSJJ_HOQwuu3iec2iQtnP_481CEIAoJzRD23dakLwHxXc"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Navbar */}
+     <Navbar/>
 
-      <main className="max-w-7xl mx-auto px-4 md:px-12 py-8 lg:flex gap-6">
+      <main className="max-w-7xl mx-auto px-4 md:px-12 py-8 lg:flex gap-6 pt-20">
         {/* Left Column: Sticky Action Panel */}
         <aside className="lg:w-1/4 mb-6 lg:mb-0">
           <div className="lg:sticky lg:top-24 space-y-4">
@@ -246,7 +186,7 @@ export default function ResumePreviewPage() {
                 <button
                   onClick={handleAtsScore}
                   disabled={atsLoading}
-                  className="w-full flex items-center justify-between bg-[#630ed4] text-white py-4 px-6 rounded-2xl font-bold hover:shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-between bg-[#630ed4] text-white py-4 px-6 rounded-2xl font-bold hover:bg-[#7c3aed] hover:shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="flex items-center gap-2">
                     <Sparkles
@@ -263,7 +203,7 @@ export default function ResumePreviewPage() {
                   fileName={`${resume.personalInfo?.fullname || "Resume"}.pdf`}
                 >
                   {({ loading }) => (
-                    <button className="w-full flex items-center gap-3 border border-slate-100 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white disabled:opacity-50">
+                    <button className="w-full flex items-center gap-3 border border-slate-200 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white disabled:opacity-50">
                       <Download size={18} />
                       {loading ? "Generating..." : "Download PDF"}
                     </button>
@@ -272,7 +212,7 @@ export default function ResumePreviewPage() {
 
                 <button
                   onClick={() => router.push(`/resume/${resumeId}`)}
-                  className="w-full flex items-center gap-3 border border-slate-100 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white"
+                  className="w-full flex items-center gap-3 border border-slate-200 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white"
                 >
                   <Eye size={18} />
                   Edit Resume
@@ -284,7 +224,7 @@ export default function ResumePreviewPage() {
             {atsResult && (
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
                 <div className="flex items-center justify-between mb-8">
-                  <h3 className="font-bold text-xl">ATS Score</h3>
+                  <h3 className="font-bold text-xl text-[#1d1a24]">ATS Score</h3>
                   <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
                     {atsResult.atsScore >= 80
                       ? "Excellent"
@@ -333,7 +273,7 @@ export default function ResumePreviewPage() {
                   <p className="text-xs font-bold text-[#7b7487] uppercase tracking-tight mb-1">
                     Top Strength
                   </p>
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium text-[#1d1a24]">
                     {atsResult.strengths?.[0] ||
                       "Strong keyword density in Skills section."}
                   </p>
@@ -364,38 +304,38 @@ export default function ResumePreviewPage() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6 pt-6 border-t border-slate-100">
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <Mail size={18} className="text-[#630ed4]" />
+                  <Mail size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.email || "alex.sterling@aura.career"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <Phone size={18} className="text-[#630ed4]" />
+                  <Phone size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.mobile || "+1 (555) 234-8901"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <MapPin size={18} className="text-[#630ed4]" />
+                  <MapPin size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.location || "San Francisco, CA"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <LinkIcon size={18} className="text-[#630ed4]" />
+                  <LinkIcon size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.portfolio || "portfolio.alexs.design"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <Share2 size={18} className="text-[#630ed4]" />
+                  <Share2 size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.linkedIn ||
                       "linkedin.com/in/asterling"}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-[#4a4455]">
-                  <Code size={18} className="text-[#630ed4]" />
+                  <Code size={18} className="text-[#630ed4] flex-shrink-0" />
                   <span className="text-sm">
                     {resume.personalInfo?.github || "github.com/asterling"}
                   </span>
@@ -407,7 +347,7 @@ export default function ResumePreviewPage() {
             {resume.summary && (
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <User size={18} className="text-[#630ed4] fill-current" />
+                  <User size={18} className="text-[#630ed4]" />
                   <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Professional Summary
                   </h2>
@@ -422,7 +362,7 @@ export default function ResumePreviewPage() {
             {resume.skills && resume.skills.length > 0 && (
               <section>
                 <div className="flex items-center gap-3 mb-4">
-                  <Zap size={18} className="text-[#630ed4] fill-current" />
+                  <Zap size={18} className="text-[#630ed4]" />
                   <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Expertise &amp; Skills
                   </h2>
@@ -444,7 +384,7 @@ export default function ResumePreviewPage() {
             {resume.workExperience && resume.workExperience.length > 0 && (
               <section>
                 <div className="flex items-center gap-3 mb-6">
-                  <Briefcase size={18} className="text-[#630ed4] fill-current" />
+                  <Briefcase size={18} className="text-[#630ed4]" />
                   <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Work Experience
                   </h2>
@@ -489,7 +429,7 @@ export default function ResumePreviewPage() {
             {resume.projects && resume.projects.length > 0 && (
               <section>
                 <div className="flex items-center gap-3 mb-6">
-                  <FolderOpen size={18} className="text-[#630ed4] fill-current" />
+                  <FolderOpen size={18} className="text-[#630ed4]" />
                   <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Featured Projects
                   </h2>
@@ -504,10 +444,16 @@ export default function ResumePreviewPage() {
                         <h3 className="font-bold text-[#1d1a24]">
                           {project.title}
                         </h3>
-                        <ExternalLink
-                          size={18}
-                          className="text-[#630ed4] cursor-pointer"
-                        />
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#630ed4] hover:text-[#7c3aed] transition-colors"
+                          >
+                            <ExternalLink size={18} />
+                          </a>
+                        )}
                       </div>
                       <p className="text-xs text-[#4a4455] mb-4 leading-relaxed">
                         {project.description}
@@ -516,7 +462,7 @@ export default function ResumePreviewPage() {
                         {project.techStack?.map((tech) => (
                           <span
                             key={tech}
-                            className="px-3 py-1 bg-white text-[10px] font-bold rounded-lg border border-slate-200 uppercase"
+                            className="px-3 py-1 bg-white text-[10px] font-bold rounded-lg border border-slate-200 uppercase text-[#4a4455]"
                           >
                             {tech}
                           </span>
@@ -532,7 +478,7 @@ export default function ResumePreviewPage() {
             {resume.education && resume.education.length > 0 && (
               <section>
                 <div className="flex items-center gap-3 mb-6">
-                  <GraduationCap size={18} className="text-[#630ed4] fill-current" />
+                  <GraduationCap size={18} className="text-[#630ed4]" />
                   <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Education
                   </h2>
@@ -569,7 +515,7 @@ export default function ResumePreviewPage() {
               {resume.achievements && resume.achievements.length > 0 && (
                 <section>
                   <div className="flex items-center gap-3 mb-6">
-                    <Award size={18} className="text-[#630ed4] fill-current" />
+                    <Award size={18} className="text-[#630ed4]" />
                     <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                       Achievements
                     </h2>
@@ -579,7 +525,7 @@ export default function ResumePreviewPage() {
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle
                           size={20}
-                          className="text-emerald-500 fill-current flex-shrink-0"
+                          className="text-emerald-500 flex-shrink-0 mt-0.5"
                         />
                         <span className="text-sm text-[#4a4455] font-medium">
                           {item}
@@ -593,7 +539,7 @@ export default function ResumePreviewPage() {
               {resume.certifications && resume.certifications.length > 0 && (
                 <section>
                   <div className="flex items-center gap-3 mb-6">
-                    <Verified size={18} className="text-[#630ed4] fill-current" />
+                    <Verified size={18} className="text-[#630ed4]" />
                     <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                       Certifications
                     </h2>
@@ -603,7 +549,7 @@ export default function ResumePreviewPage() {
                       <li key={index} className="flex items-start gap-3">
                         <Verified
                           size={20}
-                          className="text-[#7c3aed] flex-shrink-0"
+                          className="text-[#7c3aed] flex-shrink-0 mt-0.5"
                         />
                         <div>
                           <p className="text-sm font-bold text-[#1d1a24]">
@@ -626,7 +572,7 @@ export default function ResumePreviewPage() {
             <div className="w-full max-w-[850px] mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 pb-16">
               {atsResult.strengths && atsResult.strengths.length > 0 && (
                 <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                  <h4 className="font-bold text-lg mb-6 flex items-center gap-3">
+                  <h4 className="font-bold text-lg mb-6 flex items-center gap-3 text-[#1d1a24]">
                     <TrendingUp size={20} className="text-emerald-500" />
                     Key Strengths
                   </h4>
@@ -645,7 +591,7 @@ export default function ResumePreviewPage() {
               {atsResult.recommendations &&
                 atsResult.recommendations.length > 0 && (
                   <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                    <h4 className="font-bold text-lg mb-6 flex items-center gap-3">
+                    <h4 className="font-bold text-lg mb-6 flex items-center gap-3 text-[#1d1a24]">
                       <Lightbulb size={20} className="text-amber-500" />
                       Recommendations
                     </h4>
@@ -667,26 +613,6 @@ export default function ResumePreviewPage() {
           )}
         </section>
       </main>
-
-      {/* Mobile Navigation Shell */}
-      <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-[#ccc3d8] px-6 py-4 flex justify-around items-center z-50">
-        <button className="flex flex-col items-center gap-1 text-[#630ed4]">
-          <span className="material-symbols-outlined">description</span>
-          <span className="text-[10px] font-bold">Preview</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
-          <span className="material-symbols-outlined">edit</span>
-          <span className="text-[10px] font-bold">Edit</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
-          <span className="material-symbols-outlined">analytics</span>
-          <span className="text-[10px] font-bold">ATS Analysis</span>
-        </button>
-        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
-          <span className="material-symbols-outlined">download</span>
-          <span className="text-[10px] font-bold">Download</span>
-        </button>
-      </footer>
 
       <style jsx>{`
         .resume-paper {
@@ -712,28 +638,6 @@ export default function ResumePreviewPage() {
         }
         .animate-in {
           animation: slide-in 0.3s ease-out forwards;
-        }
-        .material-symbols-outlined {
-          font-family: "Material Symbols Outlined";
-          font-weight: normal;
-          font-style: normal;
-          font-size: 24px;
-          line-height: 1;
-          letter-spacing: normal;
-          text-transform: none;
-          display: inline-block;
-          white-space: nowrap;
-          word-wrap: normal;
-          direction: ltr;
-          -webkit-font-feature-settings: "liga";
-          -webkit-font-smoothing: antialiased;
-        }
-        /* Button micro-interactions */
-        button {
-          transition: transform 0.1s ease;
-        }
-        button:active {
-          transform: scale(0.96);
         }
       `}</style>
     </div>
