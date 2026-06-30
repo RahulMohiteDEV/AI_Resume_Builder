@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +22,7 @@ export default function HomePage() {
 
   const faqs = [
     {
-      question: "Is CareerFlow AI free to use?",
+      question: "Is Aura AI free to use?",
       answer:
         "Yes, we offer a free plan that lets you build and download your first resume without any credit card. Pro plans start at just $9/month.",
     },
@@ -51,12 +53,7 @@ export default function HomePage() {
       >
         <nav className="max-w-[1280px] mx-auto px-[48px] flex justify-between items-center h-16">
           <div className="flex items-center gap-4">
-            <span
-              className="material-symbols-outlined text-[#630ed4] text-3xl"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              auto_awesome
-            </span>
+
             <span className="font-bold text-xl text-[#630ed4]">
               CareerFlow AI
             </span>
@@ -76,22 +73,24 @@ export default function HomePage() {
             </a>
             <a
               className="text-[#4a4455] hover:text-[#630ed4] transition-colors duration-200 text-base"
-              href="#pricing"
-            >
-              Pricing
-            </a>
-            <a
-              className="text-[#4a4455] hover:text-[#630ed4] transition-colors duration-200 text-base"
               href="#faq"
             >
               FAQ
             </a>
           </div>
           <div className="flex items-center gap-4">
-            <button className="hidden lg:block text-[#4a4455] hover:text-[#630ed4] transition-colors text-base">
+            {/* Login Button - Navigates to Login Page */}
+            <button
+              onClick={() => router.push("auth//login")}
+              className="hidden lg:block text-[#4a4455] hover:text-[#630ed4] transition-colors text-base"
+            >
               Log In
             </button>
-            <button className="bg-[#630ed4] text-white px-6 py-2.5 rounded-full font-medium text-sm shadow-lg shadow-[#630ed4]/20 transition-transform hover:scale-105 active:scale-90">
+            {/* Build My Resume Button - Navigates to Resume Builder */}
+            <button
+              onClick={() => router.push("/resume")}
+              className="bg-[#630ed4] text-white px-6 py-2.5 rounded-full font-medium text-sm shadow-lg shadow-[#630ed4]/20 transition-transform hover:scale-105 active:scale-90"
+            >
               Build My Resume
             </button>
           </div>
@@ -107,12 +106,6 @@ export default function HomePage() {
           <div className="max-w-[1280px] mx-auto px-[48px] grid lg:grid-cols-2 gap-20 items-center">
             <div className="space-y-8">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#630ed4]/5 border border-[#630ed4]/10 text-[#630ed4] text-xs uppercase tracking-wider font-semibold">
-                <span
-                  className="material-symbols-outlined text-sm"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  bolt
-                </span>
                 Next-Gen Resume Intelligence
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-[#1d1a24] leading-tight">
@@ -143,6 +136,13 @@ export default function HomePage() {
                   </span>
                 </div>
               </div>
+              {/* Hero CTA Button */}
+              <button
+                onClick={() => router.push("/resume")}
+                className="bg-[#630ed4] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg shadow-[#630ed4]/30 hover:shadow-xl hover:scale-105 transition-all active:scale-95"
+              >
+                Get Started Now
+              </button>
             </div>
             <div className="relative group">
               {/* Glassmorphism Resume Mockup */}
@@ -164,16 +164,10 @@ export default function HomePage() {
                     <span className="w-16 h-6 bg-[#630ed4]/10 rounded-full"></span>
                     <span className="w-20 h-6 bg-[#d0e1fb]/30 rounded-full"></span>
                   </div>
-                  <span className="material-symbols-outlined text-[#630ed4]">
-                    check_circle
-                  </span>
                 </div>
                 {/* Floating Insight */}
                 <div className="absolute -right-8 top-1/4 bg-white/70 backdrop-blur-md p-4 rounded-xl shadow-xl border border-[#630ed4]/20 max-w-[200px] animate-bounce">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="material-symbols-outlined text-[#630ed4] text-sm">
-                      psychology
-                    </span>
                     <span className="text-sm font-medium text-[#630ed4]">
                       AI Suggestion
                     </span>
@@ -187,42 +181,6 @@ export default function HomePage() {
               {/* Background blobs */}
               <div className="absolute -top-10 -left-10 w-64 h-64 bg-[#630ed4]/20 rounded-full blur-[80px] -z-10"></div>
               <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-[#d0e1fb]/40 rounded-full blur-[80px] -z-10"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Social Proof */}
-        <section className="py-8 border-y border-[#ccc3d8]/20 bg-white">
-          <div className="max-w-[1280px] mx-auto px-[48px] text-center">
-            <p className="text-xs font-semibold text-[#4a4455] uppercase tracking-widest mb-4 opacity-60">
-              Trusted by pros at the world's best companies
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-12 grayscale opacity-40 hover:opacity-100 transition-opacity">
-              <img
-                className="h-8 w-auto"
-                alt="Google logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeMhGxtKGtZmfwkjZNZa8g1Saxb26ZCUqyHvlH0NCUB7vc9H_CQ1g0g5AmPBz4Rz8OCJEdSTVXgicGSG9jMxaEMu2_A3Zyu3AXwdbky_1WJPd0vJSy9jH4fYgoJQAwdZJAGg7lRe7AcccUpJuA1_V9PLd0Dstr1nfgOvKOuasA8M52SDRojIWHqmB4xFzcJ2HQ-ysrmx4d_9nqgYNNk44JTQvTTU1S_AbbS4H5Ru2EBMy0Z_h_ycNLYWKAK-VxJdPoiaC-QAViAac"
-              />
-              <img
-                className="h-8 w-auto"
-                alt="Amazon logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMn1oOUbrFzmDEzyCxgCWCshB0yhlRiz2y_05oEGWvrcmPWbtXo3PNTW2Gq0nvgudWepunMyrM1EUD1k6ibAw55Yj-9iLTVmR0ShB9vswtaXCVqFzMtWH2qH9u81MwYK2WgTQU38MNXQJN-lVTXjGoeAW1ORgolsptzKLJUpB2cxbGPxUQG6KNAx3_3FLMQ_0X_ZHQuskJ2JOd5CgqrZNzIt9f1IRWac1ZXZfJDigdodoZ8H7B6Eqe03BshJeJG3nQKPjQ0Od-wCE"
-              />
-              <img
-                className="h-8 w-auto"
-                alt="Microsoft logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8dBOrTl0Yg5WD855Pb7QCgd06dsykxkGjxX61MnGEMYew9P2J_RQEoWH7UJQ6rQrS2-_p4yc8kr1O2OwXW4oYT-MldnvVzMrudD3NQdvgqi6tfgVabPHXAjxZ8L3xDVJ7JD-yT6rI7ELob-KEX5UKnfm1H1tuu2k7xWTMogYWYqqVpfO3Ig3gUQ2ciFzapcDPn4_nW07GgA51pDJMuEQjiwOo9Ru_837D1gkhCcONyozqoVqxn3Tdgr2KGpptvDHJ0w_68RBNT_Y"
-              />
-              <img
-                className="h-8 w-auto"
-                alt="Adobe logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVXsYsbxsyyw0e8IJ0zxeG-YGZBhJkZrFsjD3ZguRQW_0dryqTXWhqQ_CXTQxjUa0nTK9s8uWPKRvIvqpm66VzT554PxUkG8_HRkLoqK4R95cOmUivS-_8rcAKDb7xYYmwhbSLLXLvTm2vvrht-onWONYPRVQLkCRP8mMQQY7Bf0DZ0Yile6-fMjEg771BMPVy65TV-7Pj1hl7izFYL-e-PTxcqn_GInJ5Ip86AKUAAaqI7xUkCAmFYePSS-_gBtHdIcT61c-7YqI"
-              />
-              <img
-                className="h-8 w-auto"
-                alt="Netflix logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvVaBj2ojw-_TcKWDhhsi9F9WG8NOfQXW3i0ShTalLt0dZbjN6TyLQ7-iN7dhOn5aJo48ESbnc-1qj0WVUcmIfhiimAeoQILzxHOH2-LFlSC5MmIs-r6LnElgGiom-YHEsTEhUAtfgNU1l9MCaSvTzTBi5NoBt61H2NYzKgMavd6-Ulh4EEjCYdMPFz8XwqTQ-rA4if_iJk2ZMGM4ZDC7ZNyUsu7ux5PJ9eQnIgdltgNYkedS2hi1QvznWslDrwzBW0T3BkIGYjiY"
-              />
             </div>
           </div>
         </section>
@@ -243,9 +201,6 @@ export default function HomePage() {
               {/* AI Generation */}
               <div className="col-span-1 md:col-span-2 bg-white border border-[#ccc3d8] p-8 rounded-[32px] flex flex-col justify-between overflow-hidden relative group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <div className="relative z-10">
-                  <span className="material-symbols-outlined text-[#630ed4] text-3xl mb-4">
-                    auto_awesome
-                  </span>
                   <h3 className="font-semibold text-xl mb-2">AI Generation</h3>
                   <p className="text-base text-[#4a4455] max-w-md">
                     Our advanced LLMs write high-impact bullet points that
@@ -292,9 +247,7 @@ export default function HomePage() {
               </div>
               {/* Templates */}
               <div className="bg-[#f9f1ff] border border-[#ccc3d8] p-8 rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <span className="material-symbols-outlined text-[#505f76] text-3xl mb-4">
-                  dashboard
-                </span>
+               
                 <h3 className="font-semibold text-xl mb-2">
                   Premium Templates
                 </h3>
@@ -305,9 +258,7 @@ export default function HomePage() {
               </div>
               {/* AI Suggestions */}
               <div className="bg-white border border-[#ccc3d8] p-8 rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <span className="material-symbols-outlined text-[#630ed4] text-3xl mb-4">
-                  lightbulb
-                </span>
+                
                 <h3 className="font-semibold text-xl mb-2">Smart Hints</h3>
                 <p className="text-base text-[#4a4455]">
                   Contextual advice while you type to improve keyword density
@@ -316,9 +267,7 @@ export default function HomePage() {
               </div>
               {/* Cover Letter */}
               <div className="bg-white border border-[#ccc3d8] p-8 rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <span className="material-symbols-outlined text-[#713700] text-3xl mb-4">
-                  mail
-                </span>
+                
                 <h3 className="font-semibold text-xl mb-2">Cover Letters</h3>
                 <p className="text-base text-[#4a4455]">
                   Generate perfectly matched cover letters for every application
@@ -327,9 +276,7 @@ export default function HomePage() {
               </div>
               {/* Job Tracker */}
               <div className="bg-white border border-[#ccc3d8] p-8 rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <span className="material-symbols-outlined text-[#ba1a1a] text-3xl mb-4">
-                  track_changes
-                </span>
+                
                 <h3 className="font-semibold text-xl mb-2">Job Tracker</h3>
                 <p className="text-base text-[#4a4455]">
                   Keep organized with a Kanban-style board for all your active
@@ -423,9 +370,6 @@ export default function HomePage() {
                   </div>
                   <div className="bg-[#630ed4]/5 rounded-2xl p-6 border border-[#630ed4]/10">
                     <h5 className="text-sm font-medium text-[#630ed4] mb-2 flex items-center gap-2">
-                      <span className="material-symbols-outlined text-sm">
-                        tips_and_updates
-                      </span>
                       Recruiter's Tip
                     </h5>
                     <p className="text-[#4a4455] text-sm">
@@ -449,9 +393,6 @@ export default function HomePage() {
                 <ul className="space-y-6">
                   <li className="flex gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#630ed4]/10 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-[#630ed4]">
-                        analytics
-                      </span>
                     </div>
                     <div>
                       <h5 className="font-semibold text-xl">Keyword Analysis</h5>
@@ -463,9 +404,7 @@ export default function HomePage() {
                   </li>
                   <li className="flex gap-4">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[#630ed4]/10 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-[#630ed4]">
-                        rule
-                      </span>
+                      
                     </div>
                     <div>
                       <h5 className="font-semibold text-xl">
@@ -512,7 +451,7 @@ export default function HomePage() {
                         openFaq === index ? "rotate-180" : ""
                       }`}
                     >
-                      expand_more
+                      -
                     </span>
                   </button>
                   <div
@@ -540,7 +479,10 @@ export default function HomePage() {
                 companies using CareerFlow AI.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <button className="bg-white text-[#630ed4] px-10 py-4 rounded-full font-semibold text-xl hover:shadow-2xl transition-all hover:scale-105 active:scale-95">
+                <button
+                  onClick={() => router.push("/resume")}
+                  className="bg-white text-[#630ed4] px-10 py-4 rounded-full font-semibold text-xl hover:shadow-2xl transition-all hover:scale-105 active:scale-95"
+                >
                   Get Started for Free
                 </button>
                 <button className="text-white border border-white/30 px-10 py-4 rounded-full font-semibold text-xl hover:bg-white/10 transition-all">
@@ -559,12 +501,7 @@ export default function HomePage() {
       <footer className="bg-white border-t border-[#ccc3d8] w-full py-8">
         <div className="max-w-[1280px] mx-auto px-[48px] flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-4">
-            <span
-              className="material-symbols-outlined text-[#630ed4] text-2xl"
-              style={{ fontVariationSettings: "'FILL' 1" }}
-            >
-              auto_awesome
-            </span>
+          
             <span className="font-semibold text-xl text-[#1d1a24]">
               CareerFlow AI
             </span>

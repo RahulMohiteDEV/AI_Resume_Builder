@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { Bell, Settings } from "lucide-react";
+import { useRouter } from "next/navigation"
 
 export default function Navbar() {
+  const router = useRouter() 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white border-b border-slate-200 shadow-sm">
       <div className="w-full h-16 flex items-center justify-between px-4 md:px-8">
@@ -17,12 +19,12 @@ export default function Navbar() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/dashboard"
-              className="text-sm text-slate-500 hover:text-violet-700"
-            >
-              Dashboard
-            </Link>
+           <button
+  onClick={() => router.push("/resume")}
+  className="text-sm text-slate-500 hover:text-violet-700 transition-colors"
+>
+  Dashboard
+</button>
 
             <Link
               href="/resume"
@@ -31,19 +33,13 @@ export default function Navbar() {
               Resumes
             </Link>
 
-            <Link
-              href="/templates"
-              className="text-sm text-slate-500 hover:text-violet-700"
-            >
-              Templates
-            </Link>
+           <button
+  onClick={() => alert("Templates page is coming soon!")}
+  className="text-sm text-slate-500 hover:text-violet-700 transition-colors cursor-pointer"
+>
+  Templates
+</button>
 
-            <Link
-              href="/analytics"
-              className="text-sm text-slate-500 hover:text-violet-700"
-            >
-              Analytics
-            </Link>
           </nav>
         </div>
 
@@ -59,9 +55,7 @@ export default function Navbar() {
             className="cursor-pointer text-slate-500 hover:text-violet-700 transition-colors"
           />
 
-          <div className="w-9 h-9 rounded-full bg-violet-100 flex items-center justify-center text-violet-700 font-bold">
-            JD
-          </div>
+          
         </div>
       </div>
     </header>
