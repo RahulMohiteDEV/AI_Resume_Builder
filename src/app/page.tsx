@@ -150,7 +150,7 @@ export default function HomePage() {
 
       <main className="pt-16 sm:pt-20">
         {/* Hero Section - Updated with Content First on Mobile */}
-        <section className="relative overflow-hidden pt-4 sm:pt-12 pb-12 sm:pb-20">
+        <section className="relative overflow-hidden pt-12 sm:pt-8 pb-12 sm:pb-20">
           <div className="absolute inset-0 -z-10">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(124,58,237,0.1)_0%,transparent_50%)]"></div>
           </div>
