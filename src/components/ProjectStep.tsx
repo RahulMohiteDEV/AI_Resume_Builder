@@ -123,9 +123,9 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
 
         <div className="mb-8">
           <div className="flex justify-between mb-2">
-            <span>Step 4 of 8</span>
+            <span>Step 5 of 8</span>
 
-            <span>50%</span>
+            <span>60%</span>
           </div>
 
           <div className="h-2 bg-slate-200 rounded-full">

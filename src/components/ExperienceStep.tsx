@@ -129,9 +129,9 @@ onNext();
 
         <div className="mb-8">
           <div className="flex justify-between">
-            <span>Step 5 of 8</span>
+            <span>Step 6 of 8</span>
 
-            <span>62%</span>
+            <span>72%</span>
           </div>
 
           <div className="h-2 bg-slate-200 rounded-full mt-2">

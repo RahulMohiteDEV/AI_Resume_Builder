@@ -95,9 +95,9 @@ export default function SkillsStep({ resumeId, onNext, onBack }: Props) {
 
         <div className="mb-8">
           <div className="flex justify-between mb-2">
-            <span>Step 3 of 8</span>
+            <span>Step 4 of 8</span>
 
-            <span>37%</span>
+            <span>48%</span>
           </div>
 
           <div className="h-2 bg-slate-200 rounded-full">

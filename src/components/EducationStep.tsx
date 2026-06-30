@@ -114,11 +114,11 @@ export default function EducationStep({
         <div className="mb-8">
           <div className="flex justify-between mb-2">
             <span className="font-medium">
-              Step 2 of 8
+              Step 3 of 8
             </span>
 
             <span className="text-slate-500">
-              25%
+              36%
             </span>
           </div>
 
