@@ -2,7 +2,29 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Eye, Download, Sparkles } from "lucide-react";
+import {
+  Eye,
+  Download,
+  Sparkles,
+  ChevronRight,
+  Mail,
+  Phone,
+  MapPin,
+  Link as LinkIcon,
+  User,
+  Zap,
+  Briefcase,
+  GraduationCap,
+  Award,
+  CheckCircle,
+  TrendingUp,
+  Lightbulb,
+  Share2,
+  Code,
+  FolderOpen,
+  Verified,
+  ExternalLink,
+} from "lucide-react";
 import { useParams } from "next/navigation";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import ResumePDF from "@/components/ResumePDF";
@@ -11,8 +33,7 @@ import { useRouter } from "next/navigation";
 interface Resume {
   title: string;
   summary: string;
-
-    personalInfo: {
+  personalInfo: {
     fullname: string;
     email: string;
     mobile: string;
@@ -21,17 +42,14 @@ interface Resume {
     github: string;
     portfolio: string;
   };
-
   education: {
     institute: string;
     degree: string;
     startDate: string;
     endDate: string;
   }[];
-
   skills: string[];
   achievements: string[];
-  
   projects: {
     title: string;
     description: string;
@@ -39,7 +57,6 @@ interface Resume {
     githubUrl: string;
     liveUrl: string;
   }[];
-
   workExperience: {
     company: string;
     role: string;
@@ -47,382 +64,678 @@ interface Resume {
     endDate: string;
     description: string;
   }[];
-
   certifications: string[];
 }
 
 export default function ResumePreviewPage() {
   const [resume, setResume] = useState<Resume | null>(null);
-
   const [loading, setLoading] = useState(true);
-
   const [atsResult, setAtsResult] = useState<any>(null);
   const [atsLoading, setAtsLoading] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const { resumeId } = useParams();
-
   const router = useRouter();
 
   useEffect(() => {
     fetchResume();
+
+    const handleScroll = () => {
+      setIsScrolled(window.pageYOffset > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const fetchResume = async () => {
     try {
       const { data } = await axios.get(`/api/resume/${resumeId}`);
-
-      console.log("main resume in data", data);
-
       setResume(data.data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching resume:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleAtsScore = async () => {
-  if (!resume) return;
+    if (!resume) return;
 
-  try {
-    setAtsLoading(true);
+    try {
+      setAtsLoading(true);
 
-    const resumeText = `
-      Name: ${resume.personalInfo?.fullname}
+      const resumeText = `
+        Name: ${resume.personalInfo?.fullname || ""}
+        Summary: ${resume.summary || ""}
+        Skills: ${resume.skills?.join(", ") || ""}
+        Work Experience: ${resume.workExperience
+          ?.map(
+            (exp) => `
+              Role: ${exp.role}
+              Company: ${exp.company}
+              Description: ${exp.description}
+            `
+          )
+          .join("\n")}
+        Projects: ${resume.projects
+          ?.map(
+            (project) => `
+              Title: ${project.title}
+              Description: ${project.description}
+              Tech Stack: ${project.techStack?.join(", ")}
+            `
+          )
+          .join("\n")}
+        Education: ${resume.education
+          ?.map(
+            (edu) => `
+              Degree: ${edu.degree}
+              Institute: ${edu.institute}
+            `
+          )
+          .join("\n")}
+      `;
 
-      Summary:
-      ${resume.summary}
-
-      Skills:
-      ${resume.skills?.join(", ")}
-
-      Work Experience:
-      ${resume.workExperience
-        ?.map(
-          (exp) => `
-            Role: ${exp.role}
-            Company: ${exp.company}
-            Description: ${exp.description}
-          `
-        )
-        .join("\n")}
-
-      Projects:
-      ${resume.projects
-        ?.map(
-          (project) => `
-            Title: ${project.title}
-            Description: ${project.description}
-            Tech Stack: ${project.techStack?.join(", ")}
-          `
-        )
-        .join("\n")}
-
-      Education:
-      ${resume.education
-        ?.map(
-          (edu) => `
-            Degree: ${edu.degree}
-            Institute: ${edu.institute}
-          `
-        )
-        .join("\n")}
-    `;
-
-    const { data } = await axios.post(
-      "/api/ai/ats-score",
-      {
+      const { data } = await axios.post("/api/ai/ats-score", {
         resumeText,
-      }
-    );
+      });
 
-    console.log("ATS RESULT", data);
-
-    setAtsResult(data.data.AtsScore);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    setAtsLoading(false);
-  }
-};
+      setAtsResult(data.data.AtsScore);
+    } catch (error) {
+      console.error("Error getting ATS score:", error);
+    } finally {
+      setAtsLoading(false);
+    }
+  };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex justify-center items-center">
-        Loading Resume...
+      <div className="min-h-screen flex justify-center items-center bg-slate-50">
+        <div className="text-[#630ed4] font-medium animate-pulse">
+          Loading Resume...
+        </div>
       </div>
     );
   }
 
-  if (!resume) return null;
+  if (!resume) {
+    return (
+      <div className="min-h-screen flex justify-center items-center bg-slate-50">
+        <div className="text-red-500 font-medium">Resume not found</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-100">
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Actions */}
-
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-3xl p-6 border sticky top-6">
-              <h2 className="font-bold text-xl mb-6">Resume Actions</h2>
-
-              <div className="space-y-3">
-                <button
-  onClick={handleAtsScore}
-  disabled={atsLoading}
-  className="w-full flex items-center gap-3 bg-violet-600 text-white px-4 py-3 rounded-xl"
->
-                  <Sparkles size={18} />
-                  {atsLoading ? "Checking..." : "ATS Score"}
-                </button>
-
-               <PDFDownloadLink
-  document={<ResumePDF resume={resume} />}
-  fileName={`${resume.personalInfo?.fullname}-Resume.pdf`}
->
-  {({ loading }) => (
-    <button className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl">
-      <Download size={18} />
-      {loading
-        ? "Generating..."
-        : "Download PDF"}
-    </button>
-  )}
-</PDFDownloadLink>
-
-            <button
-  onClick={() => router.push(`/resume/${resumeId}`)}
-  className="w-full flex items-center gap-3 border px-4 py-3 rounded-xl"
->
-  <Eye size={18} />
-  Edit Resume
-</button>
-
-              </div>
+    <div className="min-h-screen bg-slate-50 font-sans text-[#1d1a24]">
+      {/* Top Navigation Bar with Glass Effect */}
+      <header
+        className={`w-full top-0 sticky z-50 bg-white/80 backdrop-blur-md border-b border-[#ccc3d8] transition-all duration-300 ${
+          isScrolled ? "shadow-md" : ""
+        }`}
+      >
+        <div className="flex justify-between items-center h-16 px-6 max-w-7xl mx-auto">
+          <div className="flex items-center gap-4">
+            <span className="font-bold text-xl text-[#630ed4]">
+              Aura Professional
+            </span>
+          </div>
+          <nav className="hidden md:flex items-center gap-8">
+            <a
+              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
+              href="#"
+            >
+              Dashboard
+            </a>
+            <a
+              className="text-[#630ed4] font-bold border-b-2 border-[#630ed4] pb-1 text-sm"
+              href="#"
+            >
+              Resumes
+            </a>
+            <a
+              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
+              href="#"
+            >
+              Templates
+            </a>
+            <a
+              className="text-[#4a4455] hover:text-[#630ed4] transition-colors text-sm font-medium"
+              href="#"
+            >
+              Analytics
+            </a>
+          </nav>
+          <div className="flex items-center gap-4">
+            <button className="text-[#4a4455] hover:text-[#630ed4] transition-colors">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
+            </button>
+            <div className="w-8 h-8 rounded-full bg-[#7c3aed]/20 flex items-center justify-center overflow-hidden border border-[#ccc3d8]">
+              <img
+                className="w-full h-full object-cover"
+                alt="Profile"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6P0ItjktizEqmHYEUz3s-2L8JEVl_56sqWuiIY6DVhgwDC0J2IPLjLJuwlSTqCCjte4OFijGRF82s_lC_fNSwxHuBPQ8bs6zy7QwZnKBhkA4RzM1_v-scWL-ESjgYN7_lm-wHAf_y0rifh-JVByquwoJogmZO7-GPCitg0mR5eZOw67xxIqc1ZGqTMYOek7XdJ9M5aCYdq2xmRXbHUb5-sR9sXRQVAlMSJJ_HOQwuu3iec2iQtnP_481CEIAoJzRD23dakLwHxXc"
+              />
             </div>
           </div>
+        </div>
+      </header>
 
-          {/* Resume */}
+      <main className="max-w-7xl mx-auto px-4 md:px-12 py-8 lg:flex gap-6">
+        {/* Left Column: Sticky Action Panel */}
+        <aside className="lg:w-1/4 mb-6 lg:mb-0">
+          <div className="lg:sticky lg:top-24 space-y-4">
+            {/* Core Actions */}
+            <div className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+              <h3 className="text-xs text-[#7b7487] uppercase tracking-wider mb-6 font-medium">
+                Quick Actions
+              </h3>
+              <div className="space-y-3">
+                <button
+                  onClick={handleAtsScore}
+                  disabled={atsLoading}
+                  className="w-full flex items-center justify-between bg-[#630ed4] text-white py-4 px-6 rounded-2xl font-bold hover:shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span className="flex items-center gap-2">
+                    <Sparkles
+                      size={18}
+                      className={atsLoading ? "animate-spin" : "fill-current"}
+                    />
+                    {atsLoading ? "Checking..." : "ATS Score"}
+                  </span>
+                  <ChevronRight size={18} />
+                </button>
 
-          <div className="lg:col-span-3">
-            <div
-              id="resume-preview"
-              className="bg-white shadow-lg rounded-lg p-10"
-            >
-              {/* Header */}
+                <PDFDownloadLink
+                  document={<ResumePDF resume={resume} />}
+                  fileName={`${resume.personalInfo?.fullname || "Resume"}.pdf`}
+                >
+                  {({ loading }) => (
+                    <button className="w-full flex items-center gap-3 border border-slate-100 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white disabled:opacity-50">
+                      <Download size={18} />
+                      {loading ? "Generating..." : "Download PDF"}
+                    </button>
+                  )}
+                </PDFDownloadLink>
 
-              <div className="border-b pb-6">
-                <h1 className="text-4xl font-bold">
-                  {resume.personalInfo?.fullname}
-                </h1>
+                <button
+                  onClick={() => router.push(`/resume/${resumeId}`)}
+                  className="w-full flex items-center gap-3 border border-slate-100 text-[#4a4455] py-4 px-6 rounded-2xl font-medium hover:bg-slate-50 transition-all active:scale-95 bg-white"
+                >
+                  <Eye size={18} />
+                  Edit Resume
+                </button>
+              </div>
+            </div>
 
-                <div className="mt-3 text-gray-600 text-sm flex flex-wrap gap-4">
-                  <span>{resume.personalInfo?.email}</span>
-
-                  <span>{resume.personalInfo?.mobile}</span>
-
-                  <span>{resume.personalInfo?.location}</span>
+            {/* ATS Score Card */}
+            {atsResult && (
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="font-bold text-xl">ATS Score</h3>
+                  <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
+                    {atsResult.atsScore >= 80
+                      ? "Excellent"
+                      : atsResult.atsScore >= 60
+                      ? "Good"
+                      : "Needs Work"}
+                  </span>
                 </div>
+                <div className="flex flex-col items-center mb-8">
+                  <div className="relative w-36 h-36 flex items-center justify-center">
+                    <svg className="w-full h-full transform -rotate-90">
+                      <circle
+                        className="text-slate-100"
+                        cx="72"
+                        cy="72"
+                        fill="transparent"
+                        r="64"
+                        stroke="currentColor"
+                        strokeWidth="10"
+                      />
+                      <circle
+                        className="text-emerald-500 transition-all duration-1000"
+                        cx="72"
+                        cy="72"
+                        fill="transparent"
+                        r="64"
+                        stroke="currentColor"
+                        strokeDasharray="402"
+                        strokeDashoffset={
+                          402 - (402 * (atsResult.atsScore || 0)) / 100
+                        }
+                        strokeLinecap="round"
+                        strokeWidth="10"
+                      />
+                    </svg>
+                    <span className="absolute text-4xl font-extrabold text-[#1d1a24]">
+                      {atsResult.atsScore || 0}
+                    </span>
+                  </div>
+                  <p className="text-[#4a4455] text-center mt-6 text-sm px-2">
+                    {atsResult.summary ||
+                      "Optimized for high-volume recruitment systems."}
+                  </p>
+                </div>
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100 mb-4">
+                  <p className="text-xs font-bold text-[#7b7487] uppercase tracking-tight mb-1">
+                    Top Strength
+                  </p>
+                  <p className="text-sm font-medium">
+                    {atsResult.strengths?.[0] ||
+                      "Strong keyword density in Skills section."}
+                  </p>
+                </div>
+                <button className="w-full text-[#630ed4] font-bold text-sm hover:underline">
+                  View Full Analysis
+                </button>
+              </div>
+            )}
+          </div>
+        </aside>
 
-                <div className="mt-2 flex gap-4 text-sm">
-                   <span>{resume.personalInfo?.portfolio}</span>
-                  <span>{resume.personalInfo?.github}</span>
-
-                  <span>{resume.personalInfo?.linkedIn}</span>
+        {/* Right Column: Resume Preview */}
+        <section className="lg:w-3/4 flex flex-col items-center">
+          {/* A4 Wrapper */}
+          <div className="resume-paper bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden p-10 md:p-16 flex flex-col gap-10">
+            {/* 1. Personal Info */}
+            <header>
+              <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
+                <div>
+                  <h1 className="text-4xl font-bold text-[#1d1a24] mb-2">
+                    {resume.personalInfo?.fullname || "Alex Sterling"}
+                  </h1>
+                  <p className="text-[#630ed4] font-bold text-xl tracking-tight">
+                    Senior Product Designer &amp; Systems Architect
+                  </p>
                 </div>
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-6 pt-6 border-t border-slate-100">
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <Mail size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.email || "alex.sterling@aura.career"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <Phone size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.mobile || "+1 (555) 234-8901"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <MapPin size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.location || "San Francisco, CA"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <LinkIcon size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.portfolio || "portfolio.alexs.design"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <Share2 size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.linkedIn ||
+                      "linkedin.com/in/asterling"}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-[#4a4455]">
+                  <Code size={18} className="text-[#630ed4]" />
+                  <span className="text-sm">
+                    {resume.personalInfo?.github || "github.com/asterling"}
+                  </span>
+                </div>
+              </div>
+            </header>
 
-              {/* Summary */}
-
-              {resume.summary && (
-                <section className="mt-8">
-                  <h2 className="font-bold text-xl mb-3">
+            {/* 2. Professional Summary */}
+            {resume.summary && (
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <User size={18} className="text-[#630ed4] fill-current" />
+                  <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
                     Professional Summary
                   </h2>
+                </div>
+                <p className="text-[#4a4455] leading-relaxed text-sm md:text-base">
+                  {resume.summary}
+                </p>
+              </section>
+            )}
 
-                  <p className="text-gray-700 leading-7">{resume.summary}</p>
-                </section>
-              )}
-
-
-{atsResult && (
-  <section className="mt-8 border rounded-xl p-5 bg-slate-50">
-    <h2 className="font-bold text-2xl mb-4">
-      ATS Score Report
-    </h2>
-
-    <div className="text-5xl font-bold text-green-600">
-      {atsResult.atsScore}/100
-    </div>
-
-    <p className="mt-4 text-gray-700">
-      {atsResult.summary}
-    </p>
-
-    <div className="mt-6">
-      <h3 className="font-semibold text-lg">
-        Strengths
-      </h3>
-
-      <ul className="list-disc pl-5 mt-2">
-        {atsResult.strengths?.map(
-          (item: string, index: number) => (
-            <li key={index}>{item}</li>
-          )
-        )}
-      </ul>
-    </div>
-
-    <div className="mt-6">
-      <h3 className="font-semibold text-lg">
-        Improvements
-      </h3>
-
-      <ul className="list-disc pl-5 mt-2">
-        {atsResult.improvements?.map(
-          (item: string, index: number) => (
-            <li key={index}>{item}</li>
-          )
-        )}
-      </ul>
-    </div>
-
-    <div className="mt-6">
-      <h3 className="font-semibold text-lg">
-        Recommendations
-      </h3>
-
-      <ul className="list-disc pl-5 mt-2">
-        {atsResult.recommendations?.map(
-          (item: string, index: number) => (
-            <li key={index}>{item}</li>
-          )
-        )}
-      </ul>
-    </div>
-  </section>
-)}
-
-
-              {/* Skills */}
-
-              <section className="mt-8">
-                <h2 className="font-bold text-xl mb-3">Skills</h2>
-
+            {/* 3. Skills */}
+            {resume.skills && resume.skills.length > 0 && (
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <Zap size={18} className="text-[#630ed4] fill-current" />
+                  <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                    Expertise &amp; Skills
+                  </h2>
+                </div>
                 <div className="flex flex-wrap gap-2">
-                  {resume.skills?.map((skill) => (
+                  {resume.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="bg-slate-100 px-3 py-1 rounded-md"
+                      className="px-5 py-2 bg-[#7c3aed]/10 text-[#630ed4] font-semibold rounded-full text-xs border border-[#7c3aed]/20"
                     >
                       {skill}
                     </span>
                   ))}
                 </div>
               </section>
+            )}
 
-              {/* Experience */}
-
-              <section className="mt-8">
-                <h2 className="font-bold text-xl mb-4">Work Experience</h2>
-
-                {resume.workExperience?.map((exp, index) => (
-                  <div key={index} className="mb-6">
-                    <h3 className="font-semibold">{exp.role}</h3>
-
-                    <p className="text-gray-500 text-sm">{exp.company}</p>
-
-                    <p className="text-sm text-gray-500">
-                      {exp.startDate}
-                      {" - "}
-                      {exp.endDate}
-                    </p>
-
-                    <p className="mt-2 text-gray-700">{exp.description}</p>
-                  </div>
-                ))}
-              </section>
-
-              {resume.achievements?.length > 0 && (
-  <section className="mt-8">
-    <h2 className="font-bold text-xl mb-4">
-      Achievements
-    </h2>
-
-    <ul className="list-disc pl-5">
-      {resume.achievements.map(
-        (item, index) => (
-          <li key={index}>
-            {item}
-          </li>
-        )
-      )}
-    </ul>
-  </section>
-)}
-
-              {/* Projects */}
-
-              <section className="mt-8">
-                <h2 className="font-bold text-xl mb-4">Projects</h2>
-
-                {resume.projects?.map((project, index) => (
-                  <div key={index} className="mb-6">
-                    <h3 className="font-semibold">{project.title}</h3>
-
-                    <p className="mt-2 text-gray-700">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {project.techStack?.map((tech) => (
+            {/* 4. Work Experience */}
+            {resume.workExperience && resume.workExperience.length > 0 && (
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <Briefcase size={18} className="text-[#630ed4] fill-current" />
+                  <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                    Work Experience
+                  </h2>
+                </div>
+                <div className="space-y-10 relative before:absolute before:left-[11px] before:top-2 before:bottom-0 before:w-px before:bg-slate-100">
+                  {resume.workExperience.map((exp, index) => (
+                    <div key={index} className="relative pl-10">
+                      <div
+                        className={`absolute left-0 top-1.5 w-[23px] h-[23px] rounded-full border-4 border-white shadow-sm ${
+                          index === 0 ? "bg-[#630ed4]" : "bg-slate-200"
+                        }`}
+                      />
+                      <div className="flex flex-wrap justify-between items-start mb-1">
+                        <h3 className="font-bold text-lg text-[#1d1a24]">
+                          {exp.role}
+                        </h3>
                         <span
-                          key={tech}
-                          className="bg-violet-100 text-violet-700 px-2 py-1 rounded"
+                          className={`text-sm font-bold ${
+                            index === 0 ? "text-[#630ed4]" : "text-[#7b7487]"
+                          }`}
                         >
-                          {tech}
+                          {exp.startDate} — {exp.endDate}
                         </span>
-                      ))}
+                      </div>
+                      <p className="text-[#4a4455] font-semibold mb-4">
+                        {exp.company}
+                      </p>
+                      <ul className="text-sm text-[#4a4455] space-y-3 list-disc list-outside ml-4">
+                        {exp.description
+                          ?.split("\n")
+                          .map((item: string, i: number) => (
+                            <li key={i}>{item}</li>
+                          ))}
+                      </ul>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </section>
+            )}
 
-              {/* Education */}
-
-              <section className="mt-8">
-                <h2 className="font-bold text-xl mb-4">Education</h2>
-
-                {resume.education?.map((edu, index) => (
-                  <div key={index} className="mb-4">
-                    <h3 className="font-semibold">{edu.degree}</h3>
-
-                    <p className="text-gray-600">{edu.institute}</p>
-
-                    <p className="text-sm text-gray-500">
-                      {edu.startDate}
-                      {" - "}
-                      {edu.endDate}
-                    </p>
-                  </div>
-                ))}
+            {/* 5. Projects */}
+            {resume.projects && resume.projects.length > 0 && (
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <FolderOpen size={18} className="text-[#630ed4] fill-current" />
+                  <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                    Featured Projects
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {resume.projects.map((project, index) => (
+                    <div
+                      key={index}
+                      className="p-5 rounded-2xl bg-slate-50 border border-slate-100 hover:border-[#630ed4]/20 transition-colors"
+                    >
+                      <div className="flex justify-between items-start mb-3">
+                        <h3 className="font-bold text-[#1d1a24]">
+                          {project.title}
+                        </h3>
+                        <ExternalLink
+                          size={18}
+                          className="text-[#630ed4] cursor-pointer"
+                        />
+                      </div>
+                      <p className="text-xs text-[#4a4455] mb-4 leading-relaxed">
+                        {project.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {project.techStack?.map((tech) => (
+                          <span
+                            key={tech}
+                            className="px-3 py-1 bg-white text-[10px] font-bold rounded-lg border border-slate-200 uppercase"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </section>
+            )}
 
-              {/* Certifications */}
+            {/* 6. Education */}
+            {resume.education && resume.education.length > 0 && (
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <GraduationCap size={18} className="text-[#630ed4] fill-current" />
+                  <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                    Education
+                  </h2>
+                </div>
+                <div className="space-y-6 relative before:absolute before:left-[11px] before:top-2 before:bottom-0 before:w-px before:bg-slate-100">
+                  {resume.education.map((edu, index) => (
+                    <div key={index} className="relative pl-10">
+                      <div
+                        className={`absolute left-0 top-1.5 w-[23px] h-[23px] rounded-full border-4 border-white shadow-sm ${
+                          index === 0 ? "bg-[#630ed4]" : "bg-slate-200"
+                        }`}
+                      />
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-bold text-[#1d1a24]">
+                            {edu.degree}
+                          </h3>
+                          <p className="text-sm text-[#4a4455]">
+                            {edu.institute}
+                          </p>
+                        </div>
+                        <span className="text-xs font-bold text-[#630ed4]">
+                          {edu.startDate} — {edu.endDate}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
-              {resume.certifications?.length > 0 && (
-                <section className="mt-8">
-                  <h2 className="font-bold text-xl mb-4">Certifications</h2>
+            {/* 7. Achievements & 8. Certifications */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 pt-4 border-t border-slate-100">
+              {resume.achievements && resume.achievements.length > 0 && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <Award size={18} className="text-[#630ed4] fill-current" />
+                    <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                      Achievements
+                    </h2>
+                  </div>
+                  <ul className="space-y-4">
+                    {resume.achievements.map((item, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle
+                          size={20}
+                          className="text-emerald-500 fill-current flex-shrink-0"
+                        />
+                        <span className="text-sm text-[#4a4455] font-medium">
+                          {item}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
 
-                  <ul className="list-disc pl-5">
+              {resume.certifications && resume.certifications.length > 0 && (
+                <section>
+                  <div className="flex items-center gap-3 mb-6">
+                    <Verified size={18} className="text-[#630ed4] fill-current" />
+                    <h2 className="font-bold text-sm uppercase tracking-widest text-[#4a4455]">
+                      Certifications
+                    </h2>
+                  </div>
+                  <ul className="space-y-4">
                     {resume.certifications.map((cert, index) => (
-                      <li key={index}>{cert}</li>
+                      <li key={index} className="flex items-start gap-3">
+                        <Verified
+                          size={20}
+                          className="text-[#7c3aed] flex-shrink-0"
+                        />
+                        <div>
+                          <p className="text-sm font-bold text-[#1d1a24]">
+                            {cert}
+                          </p>
+                          <p className="text-[11px] text-[#7b7487]">
+                            Issued {new Date().getFullYear() - 2}
+                          </p>
+                        </div>
+                      </li>
                     ))}
                   </ul>
                 </section>
               )}
             </div>
           </div>
-        </div>
-      </div>
+
+          {/* Detailed ATS Analysis Cards */}
+          {atsResult && (
+            <div className="w-full max-w-[850px] mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 pb-16">
+              {atsResult.strengths && atsResult.strengths.length > 0 && (
+                <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                  <h4 className="font-bold text-lg mb-6 flex items-center gap-3">
+                    <TrendingUp size={20} className="text-emerald-500" />
+                    Key Strengths
+                  </h4>
+                  <ul className="space-y-5">
+                    {atsResult.strengths.map((item: string, index: number) => (
+                      <li key={index} className="flex gap-4 items-start">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                        <p className="text-sm text-[#4a4455] leading-relaxed">
+                          {item}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {atsResult.recommendations &&
+                atsResult.recommendations.length > 0 && (
+                  <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <h4 className="font-bold text-lg mb-6 flex items-center gap-3">
+                      <Lightbulb size={20} className="text-amber-500" />
+                      Recommendations
+                    </h4>
+                    <ul className="space-y-5">
+                      {atsResult.recommendations.map(
+                        (item: string, index: number) => (
+                          <li key={index} className="flex gap-4 items-start">
+                            <span className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0" />
+                            <p className="text-sm text-[#4a4455] leading-relaxed">
+                              {item}
+                            </p>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                )}
+            </div>
+          )}
+        </section>
+      </main>
+
+      {/* Mobile Navigation Shell */}
+      <footer className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-[#ccc3d8] px-6 py-4 flex justify-around items-center z-50">
+        <button className="flex flex-col items-center gap-1 text-[#630ed4]">
+          <span className="material-symbols-outlined">description</span>
+          <span className="text-[10px] font-bold">Preview</span>
+        </button>
+        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
+          <span className="material-symbols-outlined">edit</span>
+          <span className="text-[10px] font-bold">Edit</span>
+        </button>
+        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
+          <span className="material-symbols-outlined">analytics</span>
+          <span className="text-[10px] font-bold">ATS Analysis</span>
+        </button>
+        <button className="flex flex-col items-center gap-1 text-[#4a4455]">
+          <span className="material-symbols-outlined">download</span>
+          <span className="text-[10px] font-bold">Download</span>
+        </button>
+      </footer>
+
+      <style jsx>{`
+        .resume-paper {
+          width: 100%;
+          max-width: 850px;
+          min-height: 1100px;
+        }
+        @media (max-width: 768px) {
+          .resume-paper {
+            min-height: auto;
+            padding: 1.5rem !important;
+          }
+        }
+        @keyframes slide-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-in {
+          animation: slide-in 0.3s ease-out forwards;
+        }
+        .material-symbols-outlined {
+          font-family: "Material Symbols Outlined";
+          font-weight: normal;
+          font-style: normal;
+          font-size: 24px;
+          line-height: 1;
+          letter-spacing: normal;
+          text-transform: none;
+          display: inline-block;
+          white-space: nowrap;
+          word-wrap: normal;
+          direction: ltr;
+          -webkit-font-feature-settings: "liga";
+          -webkit-font-smoothing: antialiased;
+        }
+        /* Button micro-interactions */
+        button {
+          transition: transform 0.1s ease;
+        }
+        button:active {
+          transform: scale(0.96);
+        }
+      `}</style>
     </div>
   );
 }
