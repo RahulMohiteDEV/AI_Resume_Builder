@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import {
   ArrowLeft,
@@ -15,6 +15,7 @@ import {
   Info,
   Verified,
   RefreshCw,
+  CheckCircle,
 } from "lucide-react";
 import Navbar from "./Navbar";
 
@@ -64,8 +65,14 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
     name: "projects",
   });
 
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuccess, setAiSuccess] = useState(false);
+  const [generatingIndex, setGeneratingIndex] = useState<number | null>(null);
+
   useEffect(() => {
     fetchResume();
+    // 🔽 Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const fetchResume = async () => {
@@ -89,6 +96,10 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
 
   const generateDescription = async (index: number) => {
     try {
+      setGeneratingIndex(index);
+      setAiLoading(true);
+      setAiSuccess(false);
+
       const project = watch(`projects.${index}`);
 
       const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
@@ -101,8 +112,15 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
       });
 
       setValue(`projects.${index}.description`, data.data.projectDescription);
+
+      setAiSuccess(true);
+      setTimeout(() => setAiSuccess(false), 3000);
     } catch (error) {
       console.log(error);
+      setAiSuccess(false);
+    } finally {
+      setAiLoading(false);
+      setGeneratingIndex(null);
     }
   };
 
@@ -117,10 +135,24 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
         projects: formattedProjects,
       });
 
-      onNext();
+      // 🔽 Scroll to top before navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // 🔽 Small delay for smooth UX
+      setTimeout(() => {
+        onNext();
+      }, 300);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // 🔽 Handle back button with scroll
+  const handleBack = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      onBack();
+    }, 300);
   };
 
   return (
@@ -272,17 +304,33 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
                             <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
                               Project Description <span className="text-red-500">*</span>
                             </label>
+                            {/* AI Generate Description Button - Matching Skills Step Design */}
                             <button
                               type="button"
                               onClick={() => generateDescription(index)}
-                              className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-[#630ed4] hover:text-[#7c3aed] transition-colors px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#7c3aed]/5 border border-[#630ed4]/10"
+                              disabled={aiLoading && generatingIndex === index}
+                              className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-[#7c3aed]/10 text-[#630ed4] border border-[#630ed4]/20 rounded-lg sm:rounded-xl text-xs sm:text-sm hover:bg-[#7c3aed]/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                              <Sparkles
-                                size={14}
-                                className="sm:size-[16px]"
-                                style={{ fontVariationSettings: "'FILL' 1" }}
-                              />
-                              Generate Description
+                              {aiLoading && generatingIndex === index ? (
+                                <>
+                                  <RefreshCw size={14} className="sm:size-[16px] animate-spin" />
+                                  <span>Thinking...</span>
+                                </>
+                              ) : aiSuccess && generatingIndex === index ? (
+                                <>
+                                  <CheckCircle size={14} className="sm:size-[16px] text-green-500" />
+                                  <span className="text-green-600">Generated!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles
+                                    size={14}
+                                    className="sm:size-[16px]"
+                                    style={{ fontVariationSettings: "'FILL' 1" }}
+                                  />
+                                  <span>Generate with AI</span>
+                                </>
+                              )}
                             </button>
                           </div>
                           <div className="relative">
@@ -339,7 +387,7 @@ export default function ProjectsStep({ resumeId, onNext, onBack }: Props) {
                 <div className="pt-5 sm:pt-6 md:pt-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-slate-100">
                   <button
                     type="button"
-                    onClick={onBack}
+                    onClick={handleBack}
                     className="flex items-center justify-center sm:justify-start gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors py-3 sm:py-2 px-4 w-full sm:w-auto order-2 sm:order-1"
                   >
                     <ArrowLeft size={18} />

@@ -10,6 +10,7 @@ import {
   Info,
   Verified,
   RefreshCw,
+  CheckCircle,
 } from "lucide-react";
 import Navbar from "./Navbar";
 
@@ -23,9 +24,12 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiSuccess, setAiSuccess] = useState(false);
 
   useEffect(() => {
     fetchResume();
+    // Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const fetchResume = async () => {
@@ -43,7 +47,14 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
       await axios.patch(`/api/resume/${resumeId}`, {
         summary,
       });
-      onNext();
+      
+      // Scroll to top before navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Small delay for smooth UX
+      setTimeout(() => {
+        onNext();
+      }, 300);
     } catch (err) {
       console.log(err);
     } finally {
@@ -51,16 +62,45 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
     }
   };
 
-  const handleAIImprove = async () => {
-    setAiLoading(true);
-    // Simulate AI improvement
-    setTimeout(() => {
+  const handleAIGenerate = async () => {
+    try {
+      setAiLoading(true);
+      setAiSuccess(false);
+
+      const { data: resumeData } = await axios.get(`/api/resume/${resumeId}`);
+      const resume = resumeData.data;
+
+      const jobTitle = resume?.jobTitle || "Professional";
+      const skills = resume?.skills?.length 
+        ? resume.skills.join(", ") 
+        : "Not specified";
+      const experienceLevel = resume?.experienceLevel || "mid-level";
+
+      const { data } = await axios.post("/api/ai/generate-summary", {
+        jobTitle,
+        skills,
+        experienceLevel,
+      });
+
+      if (data.success && data.data?.summary) {
+        setSummary(data.data.summary);
+        setAiSuccess(true);
+        setTimeout(() => setAiSuccess(false), 3000);
+      } else {
+        throw new Error("Failed to generate summary");
+      }
+    } catch (error: any) {
+      console.error("Error generating summary:", error);
+      alert(
+        error?.response?.data?.message || 
+        "Failed to generate summary. Please try again."
+      );
+      setAiSuccess(false);
+    } finally {
       setAiLoading(false);
-      // You can add actual AI improvement logic here
-    }, 1500);
+    }
   };
 
-  // Count words
   const wordCount = summary.trim() ? summary.trim().split(/\s+/).length : 0;
 
   return (
@@ -110,13 +150,42 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
               <div className="space-y-6 sm:space-y-8">
                 {/* Input Section */}
                 <div className="space-y-1.5 sm:space-y-2">
-                  <div className="flex justify-between items-center ml-1">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0 ml-1">
                     <label className="text-xs sm:text-sm text-slate-900 font-semibold block">
                       Summary <span className="text-red-500">*</span>
                     </label>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-slate-400">
-                      {wordCount} words
-                    </span>
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <span className="text-[10px] sm:text-[11px] font-bold text-slate-400">
+                        {wordCount} words
+                      </span>
+                      <button
+                        type="button"
+                        onClick={handleAIGenerate}
+                        disabled={aiLoading}
+                        className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 bg-[#7c3aed]/10 text-[#630ed4] border border-[#630ed4]/20 rounded-lg sm:rounded-xl text-xs sm:text-sm hover:bg-[#7c3aed]/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed"
+                      >
+                        {aiLoading ? (
+                          <>
+                            <RefreshCw size={14} className="sm:size-[16px] animate-spin" />
+                            <span>Thinking...</span>
+                          </>
+                        ) : aiSuccess ? (
+                          <>
+                            <CheckCircle size={14} className="sm:size-[16px] text-green-500" />
+                            <span className="text-green-600">Generated!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles
+                              size={14}
+                              className="sm:size-[16px]"
+                              style={{ fontVariationSettings: "'FILL' 1" }}
+                            />
+                            <span>Generate with AI</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
                   <div className="relative group">
                     <div className="absolute top-3.5 sm:top-4 left-3 sm:left-4 text-slate-400 group-focus-within:text-[#630ed4] transition-colors duration-200">
@@ -128,30 +197,6 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
                       value={summary}
                       onChange={(e) => setSummary(e.target.value)}
                     />
-                    {/* AI Suggestion Trigger */}
-                    <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4">
-                      <button
-                        className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-[#7c3aed]/5 hover:bg-[#7c3aed]/10 text-[#630ed4] border border-[#630ed4]/20 rounded-lg sm:rounded-xl transition-all active:scale-95 group/ai text-xs sm:text-sm"
-                        onClick={handleAIImprove}
-                        disabled={aiLoading}
-                      >
-                        {aiLoading ? (
-                          <>
-                            <RefreshCw size={16} className="sm:size-[18px] animate-spin text-[#630ed4]" />
-                            <span className="text-[10px] sm:text-xs font-bold">Analyzing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles
-                              size={16}
-                              className="sm:size-[18px] text-[#630ed4]"
-                              style={{ fontVariationSettings: "'FILL' 1" }}
-                            />
-                            <span className="text-[10px] sm:text-xs font-bold">AI Improve</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
                   </div>
                 </div>
 
@@ -160,7 +205,7 @@ export default function SummaryStep({ resumeId, onNext, onBack }: Props) {
                   <div className="bg-blue-50/50 border border-blue-100 px-3 sm:px-4 py-2 rounded-full flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
                     <Info size={16} className="sm:size-[20px] text-blue-600 flex-shrink-0" />
                     <span className="text-blue-800 text-[10px] sm:text-xs font-semibold text-center sm:text-left">
-                      Pro Tip: Keep it between 3-5 sentences
+                      Pro Tip: Keep it between 3-5 sentences (50-80 words)
                     </span>
                   </div>
                   <div className="bg-emerald-50/50 border border-emerald-100 px-3 sm:px-4 py-2 rounded-full flex items-center gap-1.5 sm:gap-2 w-full sm:w-auto">

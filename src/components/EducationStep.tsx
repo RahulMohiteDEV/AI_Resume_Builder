@@ -58,6 +58,8 @@ export default function EducationStep({ resumeId, onNext, onBack }: Props) {
 
   useEffect(() => {
     fetchResume();
+    // 🔽 Scroll to top when component mounts
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const fetchResume = async () => {
@@ -78,10 +80,25 @@ export default function EducationStep({ resumeId, onNext, onBack }: Props) {
       await axios.patch(`/api/resume/${resumeId}`, {
         education: values.education,
       });
-      onNext();
+      
+      // 🔽 Scroll to top before navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // 🔽 Small delay for smooth UX
+      setTimeout(() => {
+        onNext();
+      }, 300);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // 🔽 Handle back button with scroll
+  const handleBack = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      onBack();
+    }, 300);
   };
 
   return (
@@ -255,7 +272,7 @@ export default function EducationStep({ resumeId, onNext, onBack }: Props) {
                 <div className="pt-5 sm:pt-6 md:pt-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-slate-100">
                   <button
                     type="button"
-                    onClick={onBack}
+                    onClick={handleBack}
                     className="flex items-center justify-center sm:justify-start gap-2 text-sm text-slate-400 hover:text-slate-900 transition-colors py-3 sm:py-2 px-4 w-full sm:w-auto order-2 sm:order-1"
                   >
                     <ArrowLeft size={18} />
