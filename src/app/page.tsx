@@ -261,44 +261,44 @@ export default function HomePage() {
                     quantify your achievements using the STAR method.
                   </p>
                 </div>
-                <div className="absolute bottom-0 right-0 w-1/2 h-full opacity-5 group-hover:scale-110 transition-transform duration-500">
-                  <span className="material-symbols-outlined text-[150px] sm:text-[200px] absolute -bottom-10 -right-10">
-                    description
-                  </span>
-                </div>
+                
               </div>
-              {/* ATS Score */}
-              <div className="bg-[#7c3aed] text-[#ede0ff] p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] flex flex-col justify-center items-center text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 mb-3 sm:mb-4 flex items-center justify-center">
-                  <svg className="w-full h-full transform -rotate-90">
-                    <circle
-                      className="opacity-20"
-                      cx="48"
-                      cy="48"
-                      fill="transparent"
-                      r="44"
-                      stroke="currentColor"
-                      strokeWidth="8"
-                    />
-                    <circle
-                      className="text-white"
-                      cx="48"
-                      cy="48"
-                      fill="transparent"
-                      r="44"
-                      stroke="currentColor"
-                      strokeDasharray="276"
-                      strokeDashoffset="20"
-                      strokeWidth="8"
-                    />
-                  </svg>
-                  <span className="absolute text-lg sm:text-xl font-bold">98</span>
-                </div>
-                <h3 className="font-semibold text-lg sm:text-xl mb-2">ATS Score</h3>
-                <p className="text-xs sm:text-sm font-medium opacity-80">
-                  Real-time check
-                </p>
-              </div>
+             {/* ATS Score */}
+<div className="bg-[#7c3aed] text-[#ede0ff] p-4 sm:p-6 md:p-8 rounded-[20px] sm:rounded-[24px] md:rounded-[32px] flex flex-col justify-center items-center text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg w-full max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[240px] mx-auto">
+  <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-2 sm:mb-3 md:mb-4 flex items-center justify-center">
+    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+      <circle
+        className="opacity-20"
+        cx="50"
+        cy="50"
+        fill="transparent"
+        r="44"
+        stroke="currentColor"
+        strokeWidth="8"
+      />
+      <circle
+        className="text-white transition-all duration-500"
+        cx="50"
+        cy="50"
+        fill="transparent"
+        r="44"
+        stroke="currentColor"
+        strokeDasharray="276.46"
+        strokeDashoffset="20"
+        strokeWidth="8"
+        strokeLinecap="round"
+      />
+    </svg>
+    <span className="absolute text-sm sm:text-lg md:text-xl font-bold">98</span>
+  </div>
+  
+  <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-1 sm:mb-2">
+    ATS Score
+  </h3>
+  <p className="text-[10px] sm:text-xs md:text-sm font-medium opacity-80">
+    Real-time check
+  </p>
+</div>
               {/* Templates */}
               <div className="bg-[#f9f1ff] border border-[#ccc3d8] p-6 sm:p-8 rounded-[24px] sm:rounded-[32px] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <h3 className="font-semibold text-lg sm:text-xl mb-2">
@@ -494,7 +494,7 @@ export default function HomePage() {
                         openFaq === index ? "rotate-180" : ""
                       }`}
                     >
-                      expand_more
+                      -
                     </span>
                   </button>
                   <div
