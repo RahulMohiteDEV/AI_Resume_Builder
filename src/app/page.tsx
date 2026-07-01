@@ -93,7 +93,7 @@ export default function HomePage() {
 
             {/* Build My Resume Button */}
             <button
-              onClick={() => router.push("/resume")}
+              onClick={() => router.push("/auth/register")}
               className="bg-[#630ed4] text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-medium text-xs sm:text-sm shadow-lg shadow-[#630ed4]/20 transition-transform hover:scale-105 active:scale-90 whitespace-nowrap"
             >
               Build My Resume
@@ -190,7 +190,7 @@ export default function HomePage() {
               </div>
               {/* Hero CTA Button */}
               <button
-                onClick={() => router.push("/resume")}
+                onClick={() => router.push("/auth/register")}
                 className="bg-[#630ed4] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg shadow-lg shadow-[#630ed4]/30 hover:shadow-xl hover:scale-105 transition-all active:scale-95"
               >
                 Get Started Now
@@ -523,7 +523,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
                 <button
-                  onClick={() => router.push("/resume")}
+                  onClick={() => router.push("/auth/register")}
                   className="bg-white text-[#630ed4] px-8 sm:px-10 py-3 sm:py-4 rounded-full font-semibold text-lg sm:text-xl hover:shadow-2xl transition-all hover:scale-105 active:scale-95 w-full sm:w-auto"
                 >
                   Get Started for Free

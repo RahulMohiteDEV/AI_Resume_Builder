@@ -125,7 +125,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                       />
                       <input
                         className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
-                        placeholder="Jane Doe"
+                        placeholder="Full Name"
                         required
                         type="text"
                         {...register("fullname")}
@@ -165,7 +165,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                       />
                       <input
                         className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
-                        placeholder="jane.doe@example.com"
+                        placeholder="Email Address"
                         required
                         type="email"
                         {...register("email")}
@@ -185,7 +185,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                       />
                       <input
                         className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
-                        placeholder="+1 (555) 000-0000"
+                        placeholder="Mobile Number"
                         required
                         type="tel"
                         {...register("mobile")}
@@ -205,7 +205,7 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                       />
                       <input
                         className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
-                        placeholder="San Francisco, CA"
+                        placeholder="City, State"
                         required
                         type="text"
                         {...register("location")}
