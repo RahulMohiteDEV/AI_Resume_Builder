@@ -12,9 +12,6 @@ import {
   ArrowRight,
   Link,
   Briefcase,
-  Settings,
-  Bell,
-  Sparkles,
   Code,
   RefreshCw,
 } from "lucide-react";
@@ -72,35 +69,39 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-slate-50 pt-10">
-        <main className="max-w-7xl mx-auto px-4 md:px-8 lg:px-10 py-10">
-           {/* Progress Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-end mb-4">
-            <div>
-              <p className="text-[#630ed4] text-xs uppercase tracking-widest mb-1">
-                Step 1 of 8
-              </p>
-              <h1 className="text-3xl text-[#1d1a24]">Personal Information</h1>
-            </div>
-            <div className="text-right">
-              <span className="text-sm text-[#4a4455]">12% Complete</span>
-            </div>
-          </div>
-          <div className="h-1.5 w-full bg-[#e8dfee] rounded-full overflow-hidden">
-            <div className="bg-gradient-to-r from-[#630ed4] to-[#7c3aed] h-full w-[12%] rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]"></div>
-          </div>
-        </div>
-
-          {/* Main Card */}
-          <div className="max-w-4xl mx-auto bg-white rounded-[32px] border border-slate-200 shadow-xl overflow-hidden">
-            <div className="p-8 md:p-12">
-              {/* Heading */}
-              <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold text-slate-900">
+      <div className="min-h-screen bg-slate-50 pt-14 sm:pt-16">
+        <main className="w-full max-w-7xl mx-auto px-0 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-3 sm:py-6 md:py-8 lg:py-10">
+          {/* Progress Header - Full Width */}
+          <div className="w-full px-3 sm:px-0 mb-4 sm:mb-6 md:mb-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 sm:gap-4 mb-3 sm:mb-4">
+              <div>
+                <p className="text-[#630ed4] text-[10px] sm:text-xs uppercase tracking-widest mb-1">
+                  Step 1 of 8
+                </p>
+                <h1 className="text-lg sm:text-2xl md:text-3xl text-[#1d1a24] font-bold">
                   Personal Information
                 </h1>
-                <p className="mt-3 text-slate-500 max-w-xl mx-auto">
+              </div>
+              <div className="text-right w-full sm:w-auto">
+                <span className="text-xs sm:text-sm text-[#4a4455] font-medium">
+                  12% Complete
+                </span>
+              </div>
+            </div>
+            <div className="h-1.5 w-full bg-[#e8dfee] rounded-full overflow-hidden">
+              <div className="bg-gradient-to-r from-[#630ed4] to-[#7c3aed] h-full w-[12%] rounded-full shadow-[0_0_8px_rgba(124,58,237,0.4)]"></div>
+            </div>
+          </div>
+
+          {/* Main Card - Full Width on Mobile */}
+          <div className="w-full bg-white border-0 sm:border sm:border-slate-200 shadow-none sm:shadow-lg sm:shadow-xl overflow-hidden ">
+            <div className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12">
+              {/* Heading */}
+              <div className="text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900">
+                  Personal Information
+                </h1>
+                <p className="mt-2 sm:mt-3 text-sm sm:text-base text-slate-500 max-w-2xl mx-auto px-2 sm:px-4">
                   Let's start with the basics. This information will appear at
                   the top of your resume and help recruiters contact you.
                 </p>
@@ -109,21 +110,21 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
               <form
                 id="personalInfoForm"
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-8"
+                className="space-y-5 sm:space-y-6 md:space-y-8"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6">
                   {/* Full Name */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
-                      Full Name
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
+                      Full Name <span className="text-red-500">*</span>
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <User
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="Jane Doe"
                         required
                         type="text"
@@ -133,17 +134,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* Professional Title */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
-                      Professional Title
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
+                      Professional Title <span className="text-red-500">*</span>
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Briefcase
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="Senior Product Designer"
                         required
                         type="text"
@@ -153,17 +154,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* Email */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
-                      Email Address
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
+                      Email Address <span className="text-red-500">*</span>
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Mail
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="jane.doe@example.com"
                         required
                         type="email"
@@ -173,17 +174,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* Mobile */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
-                      Mobile Number
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
+                      Mobile Number <span className="text-red-500">*</span>
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Phone
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="+1 (555) 000-0000"
                         required
                         type="tel"
@@ -193,17 +194,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* Location */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
-                      Location
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
+                      Location <span className="text-red-500">*</span>
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <MapPin
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="San Francisco, CA"
                         required
                         type="text"
@@ -213,17 +214,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* LinkedIn */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
                       LinkedIn Profile
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Link
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="linkedin.com/in/janedoe"
                         type="url"
                         {...register("linkedIn")}
@@ -232,17 +233,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* GitHub */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
                       GitHub Profile
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Code
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="github.com/janedoe"
                         type="url"
                         {...register("github")}
@@ -251,17 +252,17 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
 
                   {/* Portfolio */}
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-900 font-semibold block ml-1">
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <label className="text-xs sm:text-sm text-slate-900 font-semibold block ml-1">
                       Portfolio URL
                     </label>
-                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-2xl px-4 py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
+                    <div className="group flex items-center bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-3.5 sm:py-4 focus-within:ring-2 focus-within:ring-[#630ed4] focus-within:bg-white transition-all">
                       <Globe
-                        size={20}
-                        className="text-slate-400 mr-3 group-focus-within:text-[#630ed4] transition-colors"
+                        size={18}
+                        className="sm:size-[20px] text-slate-400 mr-2.5 sm:mr-3 group-focus-within:text-[#630ed4] transition-colors flex-shrink-0"
                       />
                       <input
-                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm outline-none"
+                        className="w-full bg-transparent border-none p-0 focus:ring-0 text-slate-900 placeholder:text-slate-400 text-sm sm:text-base outline-none"
                         placeholder="www.janedoe.design"
                         type="url"
                         {...register("portfolio")}
@@ -270,18 +271,16 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                   </div>
                 </div>
 
-                
-
                 {/* Footer Actions */}
-                <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-100">
+                <div className="pt-5 sm:pt-6 md:pt-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-3 sm:gap-4 border-t border-slate-100">
                   <button
-                    className="text-sm text-slate-400 hover:text-slate-900 transition-colors py-2 px-4"
+                    className="w-full sm:w-auto text-sm text-slate-400 hover:text-slate-900 transition-colors py-3 sm:py-2 px-4 order-2 sm:order-1"
                     type="button"
                   >
                     Save as Draft
                   </button>
                   <button
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#630ed4] hover:bg-[#7c3aed] text-white px-10 py-4 rounded-xl text-sm shadow-lg shadow-[#630ed4]/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed group"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#630ed4] hover:bg-[#7c3aed] text-white px-5 sm:px-8 md:px-10 py-3.5 sm:py-4 rounded-xl text-sm sm:text-base shadow-lg shadow-[#630ed4]/20 transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed group order-1 sm:order-2"
                     type="submit"
                     disabled={isSubmitting}
                   >
@@ -289,11 +288,11 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
                       {isSubmitting ? "Saving Details..." : "Continue"}
                     </span>
                     {isSubmitting ? (
-                      <RefreshCw size={18} className="animate-spin" />
+                      <RefreshCw size={16} className="sm:size-[18px] animate-spin" />
                     ) : (
                       <ArrowRight
-                        size={18}
-                        className="group-hover:translate-x-1 transition-transform"
+                        size={16}
+                        className="sm:size-[18px] group-hover:translate-x-1 transition-transform"
                       />
                     )}
                   </button>
@@ -302,8 +301,8 @@ export default function PersonalInfoStep({ resumeId, onNext }: Props) {
             </div>
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+          <div className="text-center mt-8 sm:mt-10 md:mt-12">
+            <p className="text-[10px] sm:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] text-slate-400 font-medium">
               Premium Resume Builder by Aura AI
             </p>
           </div>

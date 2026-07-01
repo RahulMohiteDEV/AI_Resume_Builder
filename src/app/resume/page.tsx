@@ -395,142 +395,152 @@ export default function ResumePage() {
       </main>
 
       {/* Create Resume Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
-          <div
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
-          ></div>
-          <div className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-2xl p-6 sm:p-8 md:p-10 transform transition-all duration-300 overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#7c3aed] via-violet-400 to-[#7c3aed]"></div>
-            <div className="flex justify-between items-center mb-6 sm:mb-10">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1d1a24] tracking-tight">
-                  New Resume
-                </h2>
-                <p className="text-[#4a4455] text-sm mt-1">
-                  Tell us about the role you're targeting.
-                </p>
-              </div>
-              <button
-                className="p-2 sm:p-3 text-[#7b7487] hover:text-[#1d1a24] transition-colors bg-slate-50 rounded-full hover:bg-slate-100"
-                onClick={() => setShowModal(false)}
-              >
-                <X size={20} className="sm:size-[24px]" />
-              </button>
-            </div>
-            <form
-              className="space-y-6 sm:space-y-8"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleCreateResume();
-              }}
-            >
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
-                  Resume Title
-                </label>
-                <div className="relative group">
-                  <FileText
-                    size={20}
-                    className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors"
-                  />
-                  <input
-                    className="w-full bg-slate-50 border border-slate-100 rounded-[1.25rem] pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 sm:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all placeholder:text-slate-300 font-medium text-sm sm:text-base"
-                    placeholder="e.g. Design Lead 2024"
-                    required
-                    type="text"
-                    value={formData.title}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        title: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
-                  Target Job Title
-                </label>
-                <div className="relative group">
-                  <Briefcase
-                    size={20}
-                    className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors"
-                  />
-                  <input
-                    className="w-full bg-slate-50 border border-slate-100 rounded-[1.25rem] pl-12 sm:pl-14 pr-4 sm:pr-6 py-4 sm:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all placeholder:text-slate-300 font-medium text-sm sm:text-base"
-                    placeholder="e.g. Senior Software Engineer"
-                    required
-                    type="text"
-                    value={formData.jobTitle}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        jobTitle: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
-                  Experience Level
-                </label>
-                <div className="relative group">
-                  <Sparkles
-                    size={20}
-                    className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors"
-                  />
-                  <select
-                    className="w-full appearance-none bg-slate-50 border border-slate-100 rounded-[1.25rem] pl-12 sm:pl-14 pr-10 sm:pr-12 py-4 sm:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all font-medium text-sm sm:text-base"
-                    value={formData.experienceLevel}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        experienceLevel: e.target.value,
-                      })
-                    }
-                  >
-                    <option value="Entry">Entry Level</option>
-                    <option value="Junior">Junior</option>
-                    <option value="Mid">Mid-Level</option>
-                    <option value="Senior">Senior</option>
-                    <option value="Lead">Lead / Staff</option>
-                    <option value="Executive">Executive</option>
-                  </select>
-                  <ChevronRight
-                    size={20}
-                    className="absolute right-4 sm:right-5 top-1/2 -translate-y-1/2 text-[#7b7487] pointer-events-none rotate-90"
-                  />
-                </div>
-              </div>
-              <div className="pt-4 flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button
-                  className="flex-1 px-6 sm:px-8 py-3 sm:py-5 rounded-[1.25rem] font-bold text-[#4a4455] hover:bg-slate-100 transition-colors text-sm sm:text-base"
-                  onClick={() => setShowModal(false)}
-                  type="button"
-                >
-                  Cancel
-                </button>
-                <button
-                  className="flex-1 px-6 sm:px-8 py-3 sm:py-5 rounded-[1.25rem] font-bold bg-[#630ed4] text-white hover:bg-violet-700 active:scale-95 transition-all shadow-xl shadow-violet-100 text-sm sm:text-base"
-                  type="submit"
-                >
-                  Generate Resume
-                </button>
-              </div>
-            </form>
+{showModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6">
+    <div
+      className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"
+      onClick={() => setShowModal(false)}
+    ></div>
+    <div className="relative w-full max-w-[95%] sm:max-w-[90%] md:max-w-[85%] lg:max-w-lg bg-white rounded-[1.75rem] sm:rounded-[2rem] md:rounded-[2.5rem] shadow-2xl p-5 sm:p-6 md:p-8 lg:p-10 transform transition-all duration-300 overflow-y-auto max-h-[90vh] sm:max-h-[85vh]">
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#7c3aed] via-violet-400 to-[#7c3aed]"></div>
+      
+      <div className="flex justify-between items-start gap-3 mb-4 sm:mb-6 md:mb-8 lg:mb-10">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1d1a24] tracking-tight">
+            New Resume
+          </h2>
+          <p className="text-xs sm:text-sm text-[#4a4455] mt-0.5 sm:mt-1 truncate">
+            Tell us about the role you're targeting.
+          </p>
+        </div>
+        <button
+          className="flex-shrink-0 p-1.5 sm:p-2 md:p-3 text-[#7b7487] hover:text-[#1d1a24] transition-colors bg-slate-50 rounded-full hover:bg-slate-100"
+          onClick={() => setShowModal(false)}
+          aria-label="Close modal"
+        >
+          <X size={18} className="sm:size-[20px] md:size-[24px]" />
+        </button>
+      </div>
+
+      <form
+        className="space-y-4 sm:space-y-5 md:space-y-6 lg:space-y-8"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleCreateResume();
+        }}
+      >
+        {/* Resume Title */}
+        <div className="space-y-1.5 sm:space-y-2">
+          <label className="text-[10px] sm:text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
+            Resume Title
+          </label>
+          <div className="relative group">
+            <FileText
+              size={16}
+              className="absolute left-3 sm:left-4 md:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors sm:size-[18px] md:size-[20px]"
+            />
+            <input
+              className="w-full bg-slate-50 border border-slate-100 rounded-[1rem] sm:rounded-[1.125rem] md:rounded-[1.25rem] pl-9 sm:pl-11 md:pl-14 pr-3 sm:pr-4 md:pr-6 py-3 sm:py-4 md:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all placeholder:text-slate-300 font-medium text-sm sm:text-base text-black"
+              placeholder="e.g. Design Lead 2024"
+              required
+              type="text"
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  title: e.target.value,
+                })
+              }
+            />
           </div>
         </div>
-      )}
+
+        {/* Target Job Title */}
+        <div className="space-y-1.5 sm:space-y-2">
+          <label className="text-[10px] sm:text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
+            Target Job Title
+          </label>
+          <div className="relative group">
+            <Briefcase
+              size={16}
+              className="absolute left-3 sm:left-4 md:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors sm:size-[18px] md:size-[20px]"
+            />
+            <input
+              className="w-full bg-slate-50 border border-slate-100 rounded-[1rem] sm:rounded-[1.125rem] md:rounded-[1.25rem] pl-9 sm:pl-11 md:pl-14 pr-3 sm:pr-4 md:pr-6 py-3 sm:py-4 md:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all placeholder:text-slate-300 font-medium text-sm sm:text-base text-black"
+              placeholder="e.g. Senior Software Engineer"
+              required
+              type="text"
+              value={formData.jobTitle}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  jobTitle: e.target.value,
+                })
+              }
+            />
+          </div>
+        </div>
+
+        {/* Experience Level */}
+        <div className="space-y-1.5 sm:space-y-2">
+          <label className="text-[10px] sm:text-xs font-bold text-[#4a4455] uppercase tracking-widest ml-1">
+            Experience Level
+          </label>
+          <div className="relative group">
+            <Sparkles
+              size={16}
+              className="absolute left-3 sm:left-4 md:left-5 top-1/2 -translate-y-1/2 text-[#7b7487] group-focus-within:text-[#630ed4] transition-colors sm:size-[18px] md:size-[20px]"
+            />
+            <select
+              className="w-full appearance-none bg-slate-50 border border-slate-100 rounded-[1rem] sm:rounded-[1.125rem] md:rounded-[1.25rem] pl-9 sm:pl-11 md:pl-14 pr-8 sm:pr-10 md:pr-12 py-3 sm:py-4 md:py-5 focus:ring-4 focus:ring-[#7c3aed]/10 focus:border-[#630ed4] outline-none transition-all font-medium text-sm sm:text-base text-black"
+              value={formData.experienceLevel}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  experienceLevel: e.target.value,
+                })
+              }
+            >
+              <option value="Entry" className="text-black">Entry Level</option>
+              <option value="Junior" className="text-black">Junior</option>
+              <option value="Mid" className="text-black">Mid-Level</option>
+              <option value="Senior" className="text-black">Senior</option>
+              <option value="Lead" className="text-black">Lead / Staff</option>
+              <option value="Executive" className="text-black">Executive</option>
+            </select>
+            <ChevronRight
+              size={16}
+              className="absolute right-3 sm:right-4 md:right-5 top-1/2 -translate-y-1/2 text-[#7b7487] pointer-events-none rotate-90 sm:size-[18px] md:size-[20px]"
+            />
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="pt-3 sm:pt-4 flex flex-col-reverse sm:flex-row gap-2 sm:gap-3 md:gap-4">
+          <button
+            className="w-full sm:flex-1 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 rounded-[1rem] sm:rounded-[1.125rem] md:rounded-[1.25rem] font-bold text-[#4a4455] hover:bg-slate-100 transition-colors text-sm sm:text-base order-2 sm:order-1"
+            onClick={() => setShowModal(false)}
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            className="w-full sm:flex-1 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 rounded-[1rem] sm:rounded-[1.125rem] md:rounded-[1.25rem] font-bold bg-[#630ed4] text-white hover:bg-violet-700 active:scale-95 transition-all shadow-xl shadow-violet-100 text-sm sm:text-base order-1 sm:order-2"
+            type="submit"
+          >
+            Generate Resume
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
 
       {/* Bottom Navigation (Mobile) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-[12px] border-t border-[#ccc3d8]/10 flex justify-around items-center h-16 sm:h-20 z-40 px-4">
         <a
           className="flex flex-col items-center text-[#7b7487] transition-colors"
-          href="#"
+          href="/"
         >
           <LayoutDashboard size={22} className="sm:size-[24px]" />
           <span className="text-[9px] sm:text-[10px] font-bold mt-0.5">Home</span>
